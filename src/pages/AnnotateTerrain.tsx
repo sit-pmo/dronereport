@@ -85,7 +85,8 @@ export default function AnnotateTerrain() {
 
       <div style={se.layout}>
         <div style={se.canvasCol}>
-          <div style={se.canvas}>
+          {/* data-guide : repère visé par le script de captures du guide */}
+          <div style={se.canvas} data-guide="canvas">
             <PhotoCanvas
               imageUrl={photo.storageUrl}
               annotations={annotations}

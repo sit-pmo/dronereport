@@ -63,3 +63,18 @@ describe('Guide', () => {
     expect(screen.getByText('Aperçu et PDF')).toBeInTheDocument()
   })
 })
+
+describe('captures du guide', () => {
+  it('chaque capture déclarée existe dans public/guide et vise une étape du guide', async () => {
+    // Import dynamique : modules Node, seulement pour ce test
+    const { existsSync } = await import('node:fs')
+    const { CAPTURES_GUIDE } = await import('../lib/guide')
+    const etapes = new Set(ETAPES_GUIDE.map((e) => e.n))
+    for (const c of CAPTURES_GUIDE) {
+      expect(existsSync(`public/guide/${c.fichier}`), c.fichier).toBe(true)
+      expect(etapes.has(c.etape), c.id).toBe(true)
+      // Repères numérotés 1, 2, 3… sans trou
+      expect(c.reperes.map((r) => r.n)).toEqual(c.reperes.map((_, i) => i + 1))
+    }
+  })
+})

@@ -43,6 +43,21 @@ npm run build
 Publication automatique sur GitHub Pages à chaque push sur `main`
 (`.github/workflows/deploy.yml`).
 
+### Captures du guide
+
+Les captures annotées de la page Guide (`public/guide/`) sont produites par un script qui joue
+le parcours dans l'appli avec des données fictives (photos dessinées, adresse et plan fictifs,
+aucun appel à un service extérieur). Les repères et légendes sont dans `src/lib/guideCaptures.json`.
+À relancer quand un écran change :
+
+```powershell
+npx playwright install chromium   # une seule fois par poste
+npm run captures                  # build puis captures dans public/guide/
+```
+
+Photos d'exemple : `scripts/guide/exemple/`, régénérables avec
+`python scripts/guide/photos_exemple.py` (Pillow).
+
 ## Fichiers clés
 
 - `src/lib/idbStore.ts` : stockage IndexedDB.
@@ -52,3 +67,5 @@ Publication automatique sur GitHub Pages à chaque push sur `main`
 - `src/lib/rattachement.ts` : rattachement notes → photos (heure, puis GPS pour départager).
 - `src/pages/NotesTerrain.tsx`, `src/pages/RattacherNotes.tsx` : écrans associés.
 - `public/sw.js` : mode hors ligne.
+- `src/lib/guide.ts`, `src/lib/guideCaptures.json`, `src/pages/Guide.tsx` : tutoriel (textes, captures, page).
+- `scripts/guide/captures.mjs` : génération des captures du guide.

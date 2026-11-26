@@ -1,13 +1,14 @@
 /**
  * Page « Guide » : le parcours complet pour quelqu'un qui découvre l'outil.
  *
+ * Chaque étape montre des captures annotées : repères numérotés + légende.
  * Lisible sur ordinateur et sur téléphone. Sur téléphone, on n'affiche que
  * les étapes faites au téléphone (les autres se font au bureau), avec un
  * lien pour tout voir.
  */
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ETAPES_GUIDE, REGLES_GUIDE } from '../lib/guide'
+import { ETAPES_GUIDE, REGLES_GUIDE, capturesEtape, urlCapture, type CaptureGuide } from '../lib/guide'
 import { reafficherAides } from '../lib/aidesVues'
 import { useIsMobile } from '../hooks/useIsMobile'
 
@@ -45,6 +46,7 @@ export default function Guide() {
               {e.faire.map((f) => <li key={f} style={s.step}>{f}</li>)}
             </ul>
             <p style={s.piege}><strong>À éviter :</strong> {e.piege}</p>
+            {capturesEtape(e.n).map((c) => <Capture key={c.id} capture={c} />)}
           </li>
         ))}
       </ol>
@@ -73,6 +75,33 @@ export default function Guide() {
         </button>
       </p>
     </main>
+  )
+}
+
+/**
+ * Une capture annotée : image (cliquable pour l'agrandir) et légende des repères.
+ * Les numéros de la légende correspondent aux pastilles posées sur l'image.
+ */
+function Capture({ capture }: { capture: CaptureGuide }) {
+  const tel = capture.appareil === 'Téléphone'
+  const src = urlCapture(capture)
+  return (
+    <figure style={s.figure}>
+      <figcaption style={s.figTitre}>{capture.titre}</figcaption>
+      <div style={{ ...s.figCorps, ...(tel ? s.figCorpsTel : {}) }}>
+        <a href={src} target="_blank" rel="noreferrer" title="Agrandir la capture" style={tel ? s.imgLienTel : s.imgLien}>
+          <img src={src} alt={`Capture : ${capture.titre}`} loading="lazy" style={s.img} />
+        </a>
+        <ol style={s.legende}>
+          {capture.reperes.map((r) => (
+            <li key={r.n} style={s.legendeItem}>
+              <span style={s.pastille} aria-hidden="true">{r.n}</span>
+              <span>{r.legende}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </figure>
   )
 }
 
@@ -106,5 +135,19 @@ const s: Record<string, React.CSSProperties> = {
   },
   rules: { marginTop: 28 },
   rulesTitle: { fontSize: 13, fontWeight: 700, color: '#8a9eb0', letterSpacing: '0.04em', textTransform: 'uppercase', margin: 0 },
+  figure: { margin: '16px 0 0', borderTop: '1px solid #eef0f3', paddingTop: 14 },
+  figTitre: { fontSize: 13, fontWeight: 700, color: '#5a7083', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 10 },
+  figCorps: { display: 'flex', flexDirection: 'column', gap: 12 },
+  // Téléphone : capture étroite à gauche, légende à droite (en colonne sur petit écran)
+  figCorpsTel: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start' },
+  imgLien: { display: 'block' },
+  imgLienTel: { display: 'block', width: 240, maxWidth: '100%', flexShrink: 0 },
+  img: { display: 'block', width: '100%', height: 'auto', borderRadius: 8, border: '1px solid #dde1e6' },
+  legende: { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 8, flex: '1 1 220px' },
+  legendeItem: { display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 14, lineHeight: 1.45, color: '#0f1a25' },
+  pastille: {
+    width: 24, height: 24, borderRadius: '50%', background: '#c07828', color: '#fff', fontSize: 12.5, fontWeight: 700,
+    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+  },
   foot: { marginTop: 28, fontSize: 13.5, color: '#5a7083' },
 }

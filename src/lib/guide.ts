@@ -4,7 +4,11 @@
  * Source unique : la carte d'accueil et la page Guide lisent les mêmes
  * étapes, pour qu'elles ne divergent pas. Les libellés entre « » sont ceux
  * des boutons de l'application : les garder à jour si un bouton change.
+ *
+ * Les captures annotées et leurs légendes sont dans guideCaptures.json
+ * (images dans public/guide/, régénérées par « npm run captures »).
  */
+import capturesJson from './guideCaptures.json'
 
 /** Une étape du parcours, de la note sur le terrain au PDF. */
 export interface EtapeGuide {
@@ -86,3 +90,32 @@ export const REGLES_GUIDE: string[] = [
   "Aucune donnée nominative : pas de nom de particulier dans les notes ni le rapport, pas de personne ni de plaque reconnaissable sur les photos.",
   "Un fichier .json sert à passer d'un appareil à l'autre : carnet (téléphone → ordinateur) ou rapport complet (ordinateur → ordinateur).",
 ]
+
+/** Un repère numéroté posé sur une capture. */
+export interface RepereCapture {
+  n: number
+  legende: string
+}
+
+/** Une capture annotée, rattachée à une étape du guide. */
+export interface CaptureGuide {
+  id: string
+  etape: number
+  appareil: 'Téléphone' | 'Ordinateur'
+  fichier: string
+  titre: string
+  reperes: RepereCapture[]
+}
+
+/** Toutes les captures, dans l'ordre du parcours. */
+export const CAPTURES_GUIDE: CaptureGuide[] = capturesJson.captures as CaptureGuide[]
+
+/** Captures d'une étape. */
+export function capturesEtape(n: number): CaptureGuide[] {
+  return CAPTURES_GUIDE.filter((c) => c.etape === n)
+}
+
+/** URL publique d'une capture (base Vite = /dronereport/). */
+export function urlCapture(c: CaptureGuide): string {
+  return `${import.meta.env.BASE_URL}guide/${c.fichier}`
+}

@@ -1,0 +1,304 @@
+{
+  "_lisezmoi": "Captures annotées du guide. Lu par la page Guide (légendes) et par scripts/guide/captures.mjs (repères posés sur les éléments « cible »). Régénérer les images : npm run captures. Les données affichées sont fictives.",
+  "captures": [
+    {
+      "id": "tel-nouveau-carnet",
+      "etape": 1,
+      "appareil": "Téléphone",
+      "fichier": "tel-nouveau-carnet.jpg",
+      "titre": "Créer le carnet de la mission",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "css": "input[aria-label='Nom de la mission']"
+          },
+          "legende": "Nom du bâtiment inspecté.",
+          "position": "dedans"
+        },
+        {
+          "n": 2,
+          "cible": {
+            "css": "button[type='submit']"
+          },
+          "legende": "« Nouveau » crée le carnet et l'ouvre.",
+          "position": "haut"
+        }
+      ]
+    },
+    {
+      "id": "tel-carnet",
+      "etape": 1,
+      "appareil": "Téléphone",
+      "fichier": "tel-carnet.jpg",
+      "titre": "Prendre des notes pendant le vol",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "css": "textarea"
+          },
+          "legende": "Ce que l'on voit à l'écran du drone (le micro du clavier permet de dicter)."
+        },
+        {
+          "n": 2,
+          "cible": {
+            "css": "[role='radiogroup']"
+          },
+          "legende": "Gravité, si on la connaît (facultatif)."
+        },
+        {
+          "n": 3,
+          "cible": {
+            "texte": "+ Ajouter la note"
+          },
+          "legende": "Enregistre la note avec l'heure et la position."
+        },
+        {
+          "n": 4,
+          "cible": {
+            "texte": "Exporter"
+          },
+          "legende": "En fin de vol : envoie le carnet vers l'ordinateur (mail, Teams…)."
+        }
+      ]
+    },
+    {
+      "id": "pc-accueil-import",
+      "etape": 3,
+      "appareil": "Ordinateur",
+      "fichier": "pc-accueil-import.jpg",
+      "titre": "Importer le carnet sur l'ordinateur",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "texte": "Importer un rapport ou un carnet (.json)"
+          },
+          "legende": "Choisir le fichier .json reçu du téléphone.",
+          "position": "haut"
+        },
+        {
+          "n": 2,
+          "cible": {
+            "texte": "Créer un rapport à partir de ce carnet"
+          },
+          "legende": "Démarre un rapport déjà pré-rempli."
+        }
+      ]
+    },
+    {
+      "id": "pc-mission",
+      "etape": 3,
+      "appareil": "Ordinateur",
+      "fichier": "pc-mission.jpg",
+      "hauteur": 1150,
+      "titre": "Compléter les informations mission",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "css": "#batiment"
+          },
+          "legende": "Repris du titre du carnet."
+        },
+        {
+          "n": 2,
+          "cible": {
+            "css": "#adresse"
+          },
+          "legende": "Proposée d'après le GPS du téléphone : à vérifier."
+        },
+        {
+          "n": 3,
+          "cible": {
+            "css": "#dateInspection"
+          },
+          "legende": "Jour de la première note."
+        },
+        {
+          "n": 4,
+          "cible": {
+            "css": "#telepilote"
+          },
+          "legende": "Le reste se complète à la main : demandeur, drone, télépilote, catégorie de vol…"
+        }
+      ]
+    },
+    {
+      "id": "pc-photos-choix",
+      "etape": 4,
+      "appareil": "Ordinateur",
+      "fichier": "pc-photos-choix.jpg",
+      "titre": "Avec ou sans ortho",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "texte": "+ Importer l'ortho"
+          },
+          "legende": "Avec une ortho (recommandé) : on annote directement dessus."
+        },
+        {
+          "n": 2,
+          "cible": {
+            "texte": "Continuer sans ortho"
+          },
+          "legende": "Sans ortho : plan de situation, puis photos du drone. C'est ce parcours qui reprend les notes du téléphone."
+        }
+      ]
+    },
+    {
+      "id": "pc-situation",
+      "etape": 4,
+      "appareil": "Ordinateur",
+      "fichier": "pc-situation.jpg",
+      "titre": "Plan de situation (sans ortho)",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "css": ".leaflet-container"
+          },
+          "legende": "Zoomer sur le bâtiment, cliquer pour placer le marqueur. (Ici un plan fictif.)"
+        },
+        {
+          "n": 2,
+          "cible": {
+            "texte": "Capturer ce plan de situation"
+          },
+          "legende": "Enregistre le plan dans le rapport."
+        }
+      ]
+    },
+    {
+      "id": "pc-photos-terrain",
+      "etape": 4,
+      "appareil": "Ordinateur",
+      "fichier": "pc-photos-terrain.jpg",
+      "titre": "Importer les photos du drone",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "texte": "+ Ajouter des photos"
+          },
+          "legende": "Photos d'origine, copiées depuis la carte SD."
+        },
+        {
+          "n": 2,
+          "cible": {
+            "texte": "Prise à",
+            "parent": 2
+          },
+          "legende": "Chaque photo affiche l'heure lue dans le fichier (« Prise à … ») : sans elle, pas de rattachement automatique."
+        },
+        {
+          "n": 3,
+          "cible": {
+            "texte": "Rattacher les notes terrain"
+          },
+          "legende": "Place les notes du téléphone sur les photos."
+        }
+      ]
+    },
+    {
+      "id": "pc-rattacher",
+      "etape": 4,
+      "appareil": "Ordinateur",
+      "fichier": "pc-rattacher.jpg",
+      "titre": "Rattacher les notes aux photos",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "texte": "Décalage horloge drone",
+            "parent": true
+          },
+          "legende": "À régler si l'horloge du drone n'est pas à l'heure (ou « Estimer automatiquement »)."
+        },
+        {
+          "n": 2,
+          "cible": {
+            "css": "select"
+          },
+          "legende": "Photo proposée pour chaque note : la changer si besoin.",
+          "position": "haut"
+        },
+        {
+          "n": 3,
+          "cible": {
+            "texte": "Valider ("
+          },
+          "legende": "Chaque note devient un point sur sa photo."
+        }
+      ]
+    },
+    {
+      "id": "pc-annoter",
+      "etape": 4,
+      "appareil": "Ordinateur",
+      "fichier": "pc-annoter.jpg",
+      "titre": "Placer le point sur le défaut",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "texte": "Outil :",
+            "parent": true
+          },
+          "legende": "Point, rectangle ou polygone pour ajouter d'autres défauts.",
+          "position": "haut"
+        },
+        {
+          "n": 2,
+          "cible": {
+            "css": "[data-guide='canvas']"
+          },
+          "legende": "La note arrive au centre de la photo : glisser le point sur le défaut.",
+          "position": "haut"
+        },
+        {
+          "n": 3,
+          "cible": {
+            "texte": "Annotations (",
+            "parent": true
+          },
+          "legende": "Texte et gravité de chaque défaut, modifiables."
+        }
+      ]
+    },
+    {
+      "id": "pc-apercu",
+      "etape": 5,
+      "appareil": "Ordinateur",
+      "fichier": "pc-apercu.jpg",
+      "titre": "Relire et télécharger le PDF",
+      "reperes": [
+        {
+          "n": 1,
+          "cible": {
+            "texte": "Modifier :",
+            "parent": true
+          },
+          "legende": "Revenir corriger la mission ou les annotations."
+        },
+        {
+          "n": 2,
+          "cible": {
+            "texte": "Télécharger le PDF"
+          },
+          "legende": "Le livrable."
+        },
+        {
+          "n": 3,
+          "cible": {
+            "texte": "Enregistrer le rapport (.json)"
+          },
+          "legende": "Pour garder le rapport ou le passer à un collègue."
+        }
+      ],
+      "hauteur": 960
+    }
+  ]
+}

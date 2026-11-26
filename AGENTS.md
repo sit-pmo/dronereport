@@ -24,6 +24,7 @@ npm ci
 npm run dev      # http://localhost:5173/dronereport/
 npm test
 npm run build
+npm run captures # captures du guide (après « npx playwright install chromium »)
 ```
 
 Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/dronereport/
@@ -37,4 +38,7 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 - Accueil : un carnet de notes terrain s'importe comme un rapport et peut servir de début de rapport
   (bâtiment, date, adresse proche du GPS, carnet lié). Code : `src/lib/rapportDepuisCarnet.ts`.
 - Tutoriel : carte d'accueil, page Guide, bandeaux d'aide. Texte du guide dans `src/lib/guide.ts`
-  (source unique, reprend les libellés des boutons : à tenir à jour si un bouton change). 42 tests unitaires.
+  (source unique, reprend les libellés des boutons : à tenir à jour si un bouton change).
+- Guide illustré : 10 captures annotées (`public/guide/`, ~640 Ko), produites par `npm run captures`
+  avec des données fictives ; repères et légendes dans `src/lib/guideCaptures.json`.
+  Si un écran ou un libellé change, relancer `npm run captures`. 43 tests unitaires.
