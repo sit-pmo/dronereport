@@ -16,6 +16,7 @@ import {
   listCarnets, getCarnet, saveCarnet, createCarnet, deleteCarnet,
   lirePosition, exportCarnet,
 } from '../lib/notesTerrain'
+import AideEcran from '../components/AideEcran'
 
 const GRAVITES: SeverityLevel[] = ['faible', 'modere', 'grave', 'critique']
 
@@ -36,6 +37,7 @@ export default function NotesTerrain() {
         onCreate={(titre) => { const c = createCarnet(titre); refresh(); setCarnetId(c.id) }}
         onDelete={(id) => { deleteCarnet(id); refresh() }}
         onBureau={() => navigate('/app')}
+        onGuide={() => navigate('/guide')}
       />
     )
   }
@@ -44,18 +46,23 @@ export default function NotesTerrain() {
 
 // ── Liste des carnets ─────────────────────────────────────────────────────────
 
-function ListeCarnets({ carnets, onOpen, onCreate, onDelete, onBureau }: {
+function ListeCarnets({ carnets, onOpen, onCreate, onDelete, onBureau, onGuide }: {
   carnets: CarnetTerrain[]
   onOpen: (id: string) => void
   onCreate: (titre: string) => void
   onDelete: (id: string) => void
   onBureau: () => void
+  onGuide: () => void
 }) {
   const [titre, setTitre] = useState('')
   return (
     <main style={s.main}>
       <h1 style={s.title}>Notes terrain</h1>
       <p style={s.sub}>Un carnet par mission. Les notes restent sur ce téléphone jusqu'à l'export.</p>
+      <AideEcran id="notes-terrain">
+        Ouvrez cette page avant de partir : elle marche ensuite hors réseau. Une note par défaut vu à l'écran,
+        puis « Exporter » le carnet en fin de vol pour l'envoyer vers l'ordinateur.
+      </AideEcran>
 
       <form onSubmit={(e) => { e.preventDefault(); onCreate(titre); setTitre('') }} style={s.newRow}>
         <input
@@ -88,6 +95,7 @@ function ListeCarnets({ carnets, onOpen, onCreate, onDelete, onBureau }: {
       </div>
 
       <button onClick={onBureau} style={{ ...s.link, marginTop: 32 }}>Aller aux rapports (ordinateur) →</button>
+      <button onClick={onGuide} style={{ ...s.link, display: 'block' }}>Comment ça marche ? (guide)</button>
     </main>
   )
 }

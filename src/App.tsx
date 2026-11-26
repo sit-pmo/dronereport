@@ -18,6 +18,7 @@ import PhotosTerrain from './pages/PhotosTerrain'
 import AnnotateTerrain from './pages/AnnotateTerrain'
 import NotesTerrain from './pages/NotesTerrain'
 import RattacherNotes from './pages/RattacherNotes'
+import Guide from './pages/Guide'
 import { useIsMobile } from './hooks/useIsMobile'
 
 /** Page d'entrée : notes terrain sur téléphone, rapports sur ordinateur. */
@@ -39,6 +40,8 @@ function AppRoutes() {
           <AppLayout>
             <Routes>
               <Route path="/app" element={<Accueil />} />
+              {/* Guide : lisible aussi sur téléphone */}
+              <Route path="/guide" element={<Guide />} />
               <Route path="/mission" element={<DesktopOnly><InfosMission /></DesktopOnly>} />
               <Route path="/annotate" element={<DesktopOnly><Annotate /></DesktopOnly>} />
               <Route path="/photos" element={<DesktopOnly><Photos /></DesktopOnly>} />

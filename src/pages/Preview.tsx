@@ -5,6 +5,7 @@ import { ReportPDF } from '../lib/pdfTemplate'
 import { useDraft } from '../hooks/useDraft'
 import { downscaleImage, blobToDataUrl } from '../lib/imageUtils'
 import { exportDraftFile, slugify } from '../lib/draftFile'
+import AideEcran from '../components/AideEcran'
 
 export default function Preview() {
   const navigate = useNavigate()
@@ -117,6 +118,10 @@ export default function Preview() {
   return (
     <main style={s.main}>
       <h1 style={s.title}>Aperçu du rapport</h1>
+      <AideEcran id="apercu-pdf">
+        Relisez le rapport, corrigez avec « Modifier », puis « Télécharger le PDF ».
+        Pensez aussi à « Enregistrer le rapport (.json) » : sans lui, un nettoyage du navigateur efface le rapport.
+      </AideEcran>
 
       {/* Quick-edit links */}
       <div style={s.editLinks}>

@@ -6,6 +6,7 @@ import { useDraft } from '../hooks/useDraft'
 import { storePhotoLocally } from '../lib/localPhoto'
 import { downscaleImage, extractGsd } from '../lib/imageUtils'
 import { SEVERITY_COLORS, SEVERITY_LABELS, getDefaultMissionLimitations } from '../lib/constants'
+import AideEcran from '../components/AideEcran'
 
 const MAX_FILE_SIZE_MB = 400
 const ORTHO_MAX_WIDTH = 4000
@@ -135,6 +136,10 @@ export default function Photos() {
   return (
     <main style={s.main}>
       <h1 style={s.title}>{isPV ? 'Ortho thermique & anomalies' : 'Ortho & annotations'}</h1>
+      <AideEcran id="photos">
+        Avec une ortho, annotez les défauts directement dessus. Sans ortho, « Continuer sans ortho » mène
+        au plan de situation puis aux « Photos terrain », où se rattachent aussi les notes prises au téléphone.
+      </AideEcran>
 
       {/* Severity stats bar — read-only */}
       <div style={s.statsBar}>

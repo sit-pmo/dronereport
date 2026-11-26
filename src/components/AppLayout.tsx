@@ -23,7 +23,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
     photosAliases.includes(pathname) || pathname.startsWith('/annotate-terrain')
       ? '/photos'
       : pathname
-  const currentIdx = Math.max(0, paths.indexOf(resolvedPath))
+  const currentIdx = pathname === '/guide' ? -1 : Math.max(0, paths.indexOf(resolvedPath))
 
   /** Une étape n'est cliquable que si les précédentes sont remplies. */
   function accessible(idx: number): boolean {
@@ -66,6 +66,14 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           })}
         </nav>
 
+        {/* Guide toujours accessible, quel que soit l'avancement */}
+        <button
+          onClick={() => navigate('/guide')}
+          style={{ ...sb.guideLink, ...(pathname === '/guide' ? sb.guideLinkActive : {}) }}
+        >
+          📘 Guide
+        </button>
+
         <div style={sb.footerNote}>
           Données stockées dans ce navigateur uniquement.
         </div>
@@ -77,6 +85,12 @@ export default function AppLayout({ children }: { children: ReactNode }) {
 }
 
 const sb: Record<string, React.CSSProperties> = {
+  guideLink: {
+    margin: '0 10px 8px', padding: '9px 10px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.12)',
+    background: 'transparent', color: 'rgba(255,255,255,0.75)', fontSize: 13.5, textAlign: 'left',
+    cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
+  },
+  guideLinkActive: { background: 'rgba(255,255,255,0.1)', color: '#fff', fontWeight: 600 },
   brandTag: { fontSize: 10.5, fontWeight: 700, color: '#c07828', textTransform: 'uppercase', letterSpacing: '0.05em', flexBasis: '100%', paddingLeft: 38, marginTop: -6 },
   footerNote: { marginTop: 'auto', fontSize: 11.5, color: '#8a9eb0', lineHeight: 1.5, padding: '16px 20px' },
   brand: {

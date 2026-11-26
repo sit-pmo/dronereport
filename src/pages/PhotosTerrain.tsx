@@ -6,6 +6,7 @@ import { useDraft } from '../hooks/useDraft'
 import { storePhotoLocally } from '../lib/localPhoto'
 import { readPhotoMeta } from '../lib/photoMeta'
 import { downscaleImage } from '../lib/imageUtils'
+import AideEcran from '../components/AideEcran'
 
 const MAX_FILE_SIZE_MB = 30
 const TERRAIN_MAX_WIDTH = 1200
@@ -104,6 +105,10 @@ export default function PhotosTerrain() {
     <main style={s.main}>
       <h1 style={s.title}>Photos terrain</h1>
       <p style={s.sub}>Importez les photos du drone (fichiers d'origine, pour garder l'heure et le GPS). Vous pourrez annoter les anomalies sur chacune et y rattacher vos notes terrain.</p>
+      <AideEcran id="photos-terrain">
+        Importez les photos copiées depuis la carte SD du drone, pas celles reçues par messagerie.
+        Ensuite, « Rattacher les notes terrain » place vos notes du téléphone sur les bonnes photos.
+      </AideEcran>
 
       <button onClick={() => fileInputRef.current?.click()} style={s.addBtn}>
         + Ajouter des photos

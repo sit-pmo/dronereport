@@ -15,6 +15,7 @@ import { saveDraft, updateDraftPhotos } from '../lib/reportDraft'
 import { parseCarnet, saveCarnet, getCarnet } from '../lib/notesTerrain'
 import { proposerRattachements, estimerDecalage } from '../lib/rattachement'
 import { SEVERITY_LABELS, SEVERITY_COLORS } from '../lib/constants'
+import AideEcran from '../components/AideEcran'
 
 export default function RattacherNotes() {
   const navigate = useNavigate()
@@ -111,6 +112,10 @@ export default function RattacherNotes() {
         Chaque note est proposée sur la photo prise au plus près dans le temps.
         Vérifiez, corrigez si besoin, puis validez : les notes deviennent des points à placer sur les photos.
       </p>
+      <AideEcran id="rattacher-notes">
+        Si presque toutes les notes tombent sur la mauvaise photo, l'horloge du drone est décalée :
+        réglez « Décalage horloge drone ». Après validation, ouvrez chaque photo pour poser le point sur le défaut.
+      </AideEcran>
 
       {photosDatees < photos.length && (
         <p style={s.warn}>

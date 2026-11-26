@@ -3,6 +3,11 @@
 ## [Non publié]
 
 ### Ajouté
+- Tutoriel pour une première utilisation :
+  - carte « Première fois ? » sur l'accueil (parcours en 5 étapes, masquable) ;
+  - page « Guide » (menu de gauche, et lien depuis Notes terrain sur téléphone) ;
+  - bandeaux « À quoi sert cet écran » sur Notes terrain, Photos & annotations, Photos terrain,
+    Rattacher les notes et Aperçu PDF. « Masquer » est retenu dans le navigateur ; le guide permet de tout réafficher.
 - Accueil : un carnet de notes terrain s'importe aussi depuis « Importer un rapport ou un carnet ».
   Il peut servir de début de rapport : bâtiment (titre du carnet), date (première note),
   adresse proche du GPS (Base Adresse Nationale, à vérifier), carnet déjà lié pour le rattachement.

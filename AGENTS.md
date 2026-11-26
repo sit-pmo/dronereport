@@ -35,4 +35,6 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 - Pas encore testée avec une vraie photo DJI ni sur un vrai téléphone en vol.
 - Publiée sur GitHub Pages (workflow « Publier sur GitHub Pages » vert).
 - Accueil : un carnet de notes terrain s'importe comme un rapport et peut servir de début de rapport
-  (bâtiment, date, adresse proche du GPS, carnet lié). Code : `src/lib/rapportDepuisCarnet.ts`. 37 tests unitaires.
+  (bâtiment, date, adresse proche du GPS, carnet lié). Code : `src/lib/rapportDepuisCarnet.ts`.
+- Tutoriel : carte d'accueil, page Guide, bandeaux d'aide. Texte du guide dans `src/lib/guide.ts`
+  (source unique, reprend les libellés des boutons : à tenir à jour si un bouton change). 42 tests unitaires.

@@ -6,6 +6,7 @@
  * - Export / import d'un rapport complet en fichier .json (photos comprises),
  *   pour le reprendre sur un autre poste ou le passer à un collègue.
  * - Accès au mode terrain (prise de notes sur téléphone).
+ * - Carte « Première fois ? » : le parcours en 5 étapes, masquable.
  *
  * Aucun compte, aucun paiement, aucun serveur.
  */
@@ -21,6 +22,8 @@ import {
 import { exportDraftFile, parseDraftFile } from '../lib/draftFile'
 import { parseCarnet, saveCarnet } from '../lib/notesTerrain'
 import { brouillonDepuisCarnet, meilleurPointGps, adresseProche } from '../lib/rapportDepuisCarnet'
+import { ETAPES_GUIDE } from '../lib/guide'
+import { aideMasquee, masquerAide } from '../lib/aidesVues'
 import type { CarnetTerrain, ReportDraft } from '../types'
 
 export default function Accueil() {
@@ -34,6 +37,8 @@ export default function Accueil() {
   const [carnetImporte, setCarnetImporte] = useState<CarnetTerrain | null>(null)
   const [creationEnCours, setCreationEnCours] = useState(false)
   const importRef = useRef<HTMLInputElement>(null)
+  // Carte de découverte : visible tant qu'on ne l'a pas masquée sur ce navigateur
+  const [carteDecouverte, setCarteDecouverte] = useState(() => !aideMasquee('accueil-decouverte'))
 
   /** Crée un nouveau rapport vierge et ouvre le formulaire mission. */
   function handleNew() {
@@ -109,6 +114,33 @@ export default function Accueil() {
           Édition collectivité. Les données restent dans ce navigateur : rien n'est envoyé sur un serveur.
         </p>
       </div>
+
+      {carteDecouverte && (
+        <section style={s.decouverte} aria-label="Découvrir l'outil">
+          <p style={s.decouverteTitre}>Première fois ? Un rapport se fait en 5 étapes.</p>
+          {/* Frise du parcours : chaque étape ouvre le guide */}
+          <ol style={s.frise}>
+            {ETAPES_GUIDE.map((e) => (
+              <li key={e.n} style={s.friseItem}>
+                <button onClick={() => navigate('/guide')} style={s.friseBtn} title="Voir le détail dans le guide">
+                  <span style={s.friseNum}>{e.n}</span>
+                  <span style={s.friseTexte}>{e.titre}</span>
+                  <span style={s.friseAppareil}>{e.appareil === 'Téléphone' ? '📱' : '💻'} {e.appareil}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+          <div style={s.decouverteActions}>
+            <button onClick={() => navigate('/guide')} style={s.ctaPrimary}>Voir le guide</button>
+            <button
+              onClick={() => { masquerAide('accueil-decouverte'); setCarteDecouverte(false) }}
+              style={s.linkMuted}
+            >
+              Masquer (le guide reste dans le menu)
+            </button>
+          </div>
+        </section>
+      )}
 
       <div style={s.actions}>
         <button onClick={handleNew} style={s.ctaPrimary}>+ Nouveau rapport</button>
@@ -199,6 +231,22 @@ const s: Record<string, React.CSSProperties> = {
   ctaSecondary: { background: '#fff', color: '#0f1a25', border: '1.5px solid #d3dee7', borderRadius: 8, padding: '12px 18px', fontSize: 14.5, fontWeight: 600, cursor: 'pointer', minHeight: 44 },
   ctaDanger: { background: '#b91c1c', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 18px', fontSize: 14.5, fontWeight: 600, cursor: 'pointer', minHeight: 44 },
   error: { color: '#b91c1c', fontSize: 13, marginTop: 10 },
+  decouverte: { background: '#fff', border: '1px solid #dde1e6', borderRadius: 12, padding: '16px 18px', marginBottom: 24 },
+  decouverteTitre: { margin: '0 0 12px', fontSize: 15.5, fontWeight: 600, color: '#0f1a25' },
+  frise: { listStyle: 'none', padding: 0, margin: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: 8 },
+  friseItem: { display: 'flex' },
+  friseBtn: {
+    flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4, textAlign: 'left',
+    background: '#f8f7f4', border: '1px solid #dde1e6', borderRadius: 10, padding: '10px 10px', cursor: 'pointer', fontFamily: 'inherit',
+  },
+  friseNum: {
+    width: 22, height: 22, borderRadius: '50%', background: '#1a2e44', color: '#fff', fontSize: 12, fontWeight: 700,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+  },
+  friseTexte: { fontSize: 13.5, fontWeight: 600, color: '#0f1a25', lineHeight: 1.3 },
+  friseAppareil: { fontSize: 11.5, color: '#5a7083' },
+  decouverteActions: { display: 'flex', alignItems: 'center', gap: 16, marginTop: 14, flexWrap: 'wrap' },
+  linkMuted: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#5a7083', fontSize: 13, fontFamily: 'inherit' },
   info: { color: '#1a2e44', background: '#eef4f9', borderRadius: 8, padding: '8px 12px', fontSize: 13, marginTop: 10 },
   section: { marginTop: 36 },
   sectionTitle: { fontSize: 13, fontWeight: 700, color: '#8a9eb0', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 12 },
