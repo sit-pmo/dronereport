@@ -19,6 +19,7 @@ import {
   findExistingDrafts,
 } from '../lib/reportDraft'
 import { exportDraftFile, parseDraftFile } from '../lib/draftFile'
+import { parseCarnet, saveCarnet } from '../lib/notesTerrain'
 import type { ReportDraft } from '../types'
 
 export default function Accueil() {
@@ -28,6 +29,8 @@ export default function Accueil() {
   const [drafts, setDrafts] = useState<ReportDraft[]>(() => findExistingDrafts())
   const [deleteTarget, setDeleteTarget] = useState<ReportDraft | null>(null)
   const [importError, setImportError] = useState<string | null>(null)
+  // Message d'information (ex. : carnet de notes reconnu et gardé sur ce poste)
+  const [importInfo, setImportInfo] = useState<string | null>(null)
   const importRef = useRef<HTMLInputElement>(null)
 
   /** Crée un nouveau rapport vierge et ouvre le formulaire mission. */
@@ -58,13 +61,27 @@ export default function Accueil() {
     e.target.value = ''
     if (!file) return
     setImportError(null)
+    setImportInfo(null)
+    const text = await file.text()
     try {
-      const d = parseDraftFile(await file.text())
+      const d = parseDraftFile(text)
       // Si le même rapport existe déjà ici, l'import l'écrase (version la plus récente reçue)
       saveDraft(d)
       setDrafts(findExistingDrafts())
     } catch (err) {
-      setImportError(err instanceof Error ? err.message : 'Fichier illisible')
+      // Ce n'est pas un rapport : c'est peut-être un carnet de notes terrain
+      // exporté depuis le téléphone. On le garde sur ce poste et on indique
+      // où l'utiliser, plutôt qu'un message d'erreur trompeur.
+      try {
+        const c = parseCarnet(text)
+        saveCarnet(c)
+        setImportInfo(
+          `Carnet de notes terrain « ${c.titre} » (${c.notes.length} note${c.notes.length > 1 ? 's' : ''}) enregistré sur ce poste. ` +
+          'Pour l\'utiliser : ouvrez le rapport, ajoutez les photos du drone, puis « Photos terrain » → « Rattacher les notes terrain » et importez ce fichier.',
+        )
+      } catch {
+        setImportError(err instanceof Error ? err.message : 'Fichier illisible')
+      }
     }
   }
 
@@ -84,6 +101,7 @@ export default function Accueil() {
         <input ref={importRef} type="file" accept="application/json,.json" hidden onChange={handleImport} />
       </div>
       {importError && <p style={s.error}>{importError}</p>}
+      {importInfo && <p style={s.info}>{importInfo}</p>}
 
       <section style={s.section}>
         <h2 style={s.sectionTitle}>Rapports sur ce poste</h2>
@@ -151,6 +169,7 @@ const s: Record<string, React.CSSProperties> = {
   ctaSecondary: { background: '#fff', color: '#0f1a25', border: '1.5px solid #d3dee7', borderRadius: 8, padding: '12px 18px', fontSize: 14.5, fontWeight: 600, cursor: 'pointer', minHeight: 44 },
   ctaDanger: { background: '#b91c1c', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 18px', fontSize: 14.5, fontWeight: 600, cursor: 'pointer', minHeight: 44 },
   error: { color: '#b91c1c', fontSize: 13, marginTop: 10 },
+  info: { color: '#1a2e44', background: '#eef4f9', borderRadius: 8, padding: '8px 12px', fontSize: 13, marginTop: 10 },
   section: { marginTop: 36 },
   sectionTitle: { fontSize: 13, fontWeight: 700, color: '#8a9eb0', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 12 },
   empty: { color: '#8a9eb0', fontSize: 14 },
