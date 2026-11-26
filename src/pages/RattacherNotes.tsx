@@ -135,7 +135,7 @@ export default function RattacherNotes() {
 
       {carnet && (
         <>
-          <div style={s.reglages}>
+          <div style={s.reglages} data-tour="decalage">
             <label style={s.label}>
               Décalage horloge drone
               <span style={s.inline}>
@@ -169,7 +169,7 @@ export default function RattacherNotes() {
             </label>
           </div>
 
-          <table style={s.table}>
+          <table style={s.table} data-tour="rattachement-table">
             <thead>
               <tr>
                 <th style={s.th}>Heure</th>
@@ -216,7 +216,7 @@ export default function RattacherNotes() {
             </tbody>
           </table>
 
-          <button onClick={valider} style={s.cta}>
+          <button onClick={valider} style={s.cta} data-tour="valider-rattachement">
             Valider ({nbRattachees} note{nbRattachees > 1 ? 's' : ''} rattachée{nbRattachees > 1 ? 's' : ''})
           </button>
         </>

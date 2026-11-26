@@ -55,7 +55,8 @@ npx playwright install chromium   # une seule fois par poste
 npm run captures                  # build puis captures dans public/guide/
 ```
 
-Photos d'exemple : `scripts/guide/exemple/`, régénérables avec
+Photos d'exemple (toitures dessinées) : `public/exemple/`, servies aussi par le mode
+« Essayer avec un exemple » ; régénérables avec
 `python scripts/guide/photos_exemple.py` (Pillow).
 
 ## Fichiers clés
@@ -69,3 +70,5 @@ Photos d'exemple : `scripts/guide/exemple/`, régénérables avec
 - `public/sw.js` : mode hors ligne.
 - `src/lib/guide.ts`, `src/lib/guideCaptures.json`, `src/pages/Guide.tsx` : tutoriel (textes, captures, page).
 - `scripts/guide/captures.mjs` : génération des captures du guide.
+- `src/lib/exemple.ts` : rapport et carnet d'exemple (données fictives).
+- `src/lib/visiteGuidee.ts` : visite guidée (driver.js), étapes et éléments visés (`data-tour`).

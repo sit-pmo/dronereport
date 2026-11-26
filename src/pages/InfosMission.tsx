@@ -381,6 +381,7 @@ export default function InfosMission() {
 
         <button
           type="submit"
+          data-tour="mission-continuer"
           disabled={!isValid}
           style={{ ...s.cta, ...(!isValid ? s.ctaOff : {}) }}
         >

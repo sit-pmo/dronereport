@@ -1128,3 +1128,38 @@ label {
     gap: 28px;
   }
 }
+
+/* ── Visite guidée (driver.js) aux couleurs de la charte ─────────────────── */
+.driver-popover.visite-sit {
+  font-family: 'DM Sans', sans-serif;
+  border-radius: 12px;
+  max-width: 340px;
+  color: #0f1a25;
+}
+.driver-popover.visite-sit .driver-popover-title {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+.driver-popover.visite-sit .driver-popover-description {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #1a2e44;
+}
+.driver-popover.visite-sit .driver-popover-progress-text {
+  font-size: 12px;
+  color: #5a7083;
+}
+.driver-popover.visite-sit .driver-popover-next-btn {
+  background: #c07828;
+  color: #fff;
+  border: none;
+  text-shadow: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.driver-popover.visite-sit .driver-popover-next-btn:hover {
+  background: #a8661f;
+}

@@ -97,6 +97,7 @@ export interface ReportDraft {
   ignPlanDataUrl?: string   // base64 PNG capture carte IGN (flow sans ortho)
   photos?: PhotoItem[]      // photos terrain individuelles avec annotations (flow sans ortho)
   carnetId?: string         // carnet de notes terrain rattaché à ce rapport
+  exemple?: boolean         // rapport d'exemple (mode « Essayer avec un exemple »), données fictives
 }
 
 // ── Notes terrain (prises au téléphone pendant le vol) ─────────────────────

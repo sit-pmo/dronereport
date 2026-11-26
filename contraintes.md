@@ -11,3 +11,5 @@
 - [ ] Export du carnet via « Partager » sur Android et iOS
 - [ ] Plan de situation IGN depuis GitHub Pages (tuiles et géocodage)
 - [ ] Rapport créé depuis un carnet : adresse BAN trouvée en ligne et pertinente (GPS téléphone souvent à ~100 m)
+- [ ] Visite guidée de l'exemple sur un vrai poste Windows (Chrome / Edge), avec plan IGN réel
+- [ ] Exemple sur un poste hors fuseau de Paris : notes décalées de l'heure (attendu, réglable par le décalage)

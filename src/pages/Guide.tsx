@@ -11,10 +11,12 @@ import { useNavigate } from 'react-router-dom'
 import { ETAPES_GUIDE, REGLES_GUIDE, capturesEtape, urlCapture, type CaptureGuide } from '../lib/guide'
 import { reafficherAides } from '../lib/aidesVues'
 import { useIsMobile } from '../hooks/useIsMobile'
+import { useExemple } from '../hooks/useExemple'
 
 export default function Guide() {
   const navigate = useNavigate()
   const isMobile = useIsMobile()
+  const { demarrerExemple } = useExemple()
   // Sur téléphone : étapes téléphone seulement, sauf si on demande tout
   const [toutVoir, setToutVoir] = useState(false)
   const [aidesReaffichees, setAidesReaffichees] = useState(false)
@@ -33,6 +35,16 @@ export default function Guide() {
         Un rapport d'inspection en 5 étapes : les notes se prennent au téléphone pendant le vol,
         le rapport se fait ensuite sur ordinateur.
       </p>
+      {/* Sur ordinateur : la pratique avant la lecture */}
+      {!isMobile && (
+        <div style={s.essai}>
+          <div>
+            <strong>Le plus simple : essayer.</strong> Un rapport d'exemple (données fictives) et une visite guidée
+            vous font faire tout le parcours, des notes au PDF, en 5 minutes.
+          </div>
+          <button onClick={demarrerExemple} style={s.essaiBtn}>🧪 Essayer avec un exemple</button>
+        </div>
+      )}
 
       <ol style={s.list}>
         {etapes.map((e) => (
@@ -114,6 +126,14 @@ const s: Record<string, React.CSSProperties> = {
   },
   title: { fontFamily: "'Instrument Sans', sans-serif", fontSize: 24, fontWeight: 700, color: '#0f1a25', margin: '8px 0 6px' },
   sub: { fontSize: 15, color: '#5a7083', lineHeight: 1.55, margin: '0 0 24px' },
+  essai: {
+    display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', justifyContent: 'space-between',
+    background: '#1a2e44', color: '#fff', borderRadius: 12, padding: '14px 18px', margin: '0 0 24px', fontSize: 14.5, lineHeight: 1.5,
+  },
+  essaiBtn: {
+    background: '#c07828', color: '#fff', border: 'none', borderRadius: 8, padding: '10px 16px',
+    fontWeight: 600, fontSize: 14.5, cursor: 'pointer', fontFamily: 'inherit', flexShrink: 0,
+  },
   list: { listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 14 },
   card: { background: '#fff', border: '1px solid #dde1e6', borderRadius: 12, padding: '16px 18px' },
   cardHead: { display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' },

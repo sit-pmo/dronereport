@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDraft } from '../hooks/useDraft'
 import type { ReactNode } from 'react'
+import BandeauExemple from './BandeauExemple'
 
 // Étapes du parcours (édition collectivité : plus d'étape Paiement)
 const STEPS = [
@@ -65,6 +66,9 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             )
           })}
         </nav>
+
+        {/* Rapport d'exemple : reprendre la visite / supprimer */}
+        <BandeauExemple />
 
         {/* Guide toujours accessible, quel que soit l'avancement */}
         <button

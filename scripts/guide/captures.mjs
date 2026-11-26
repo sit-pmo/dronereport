@@ -7,7 +7,7 @@
  *
  * Données utilisées :
  * - carnet tapé dans l'appli, heure et GPS simulés (Saint-Pierre-d'Oléron, approximatif) ;
- * - photos de toiture DESSINÉES (scripts/guide/exemple/, générées par photos_exemple.py) ;
+ * - photos de toiture DESSINÉES (public/exemple/, générées par photos_exemple.py) ;
  * - Base Adresse Nationale et tuiles IGN remplacées par des réponses fictives :
  *   le script ne contacte aucun service extérieur.
  *
@@ -23,7 +23,8 @@ import { chromium, devices } from 'playwright'
 import { preview } from 'vite'
 
 const RACINE = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
-const EXEMPLE = join(RACINE, 'scripts', 'guide', 'exemple')
+const EXEMPLE = join(RACINE, 'scripts', 'guide', 'exemple') // plan fictif
+const PHOTOS = join(RACINE, 'public', 'exemple') // photos dessinées, aussi servies par le site
 const SORTIE = join(RACINE, 'public', 'guide')
 const { captures } = JSON.parse(await readFile(join(RACINE, 'src', 'lib', 'guideCaptures.json'), 'utf8'))
 const PAR_ID = Object.fromEntries(captures.map((c) => [c.id, c]))
@@ -211,7 +212,7 @@ async function parcoursOrdinateur(browser, base, carnet) {
 
   // Photos d'exemple (dessinées), lues comme de vraies photos : EXIF puis réduction
   await page.getByText('+ Ajouter des photos').waitFor()
-  await page.locator('input[type=file][multiple]').setInputFiles([1, 2, 3].map((i) => join(EXEMPLE, `toiture-exemple-${i}.jpg`)))
+  await page.locator('input[type=file][multiple]').setInputFiles([1, 2, 3].map((i) => join(PHOTOS, `toiture-exemple-${i}.jpg`)))
   await page.getByText('✏ Annoter').nth(2).waitFor({ timeout: 20000 })
   await capturer(page, 'pc-photos-terrain', { clip: zone() })
   await page.getByText('Rattacher les notes terrain').click()

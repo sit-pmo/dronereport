@@ -7,6 +7,7 @@
  *   pour le reprendre sur un autre poste ou le passer à un collègue.
  * - Accès au mode terrain (prise de notes sur téléphone).
  * - Carte « Première fois ? » : le parcours en 5 étapes, masquable.
+ * - « Essayer avec un exemple » : rapport fictif + visite guidée (lib/exemple, lib/visiteGuidee).
  *
  * Aucun compte, aucun paiement, aucun serveur.
  */
@@ -24,11 +25,14 @@ import { parseCarnet, saveCarnet } from '../lib/notesTerrain'
 import { brouillonDepuisCarnet, meilleurPointGps, adresseProche } from '../lib/rapportDepuisCarnet'
 import { ETAPES_GUIDE } from '../lib/guide'
 import { aideMasquee, masquerAide } from '../lib/aidesVues'
+import { supprimerExemple } from '../lib/exemple'
+import { useExemple } from '../hooks/useExemple'
 import type { CarnetTerrain, ReportDraft } from '../types'
 
 export default function Accueil() {
   const navigate = useNavigate()
   const { setDraft } = useDraft()
+  const { demarrerExemple } = useExemple()
   // Liste locale, rafraîchie après chaque action
   const [drafts, setDrafts] = useState<ReportDraft[]>(() => findExistingDrafts())
   const [deleteTarget, setDeleteTarget] = useState<ReportDraft | null>(null)
@@ -57,7 +61,9 @@ export default function Accueil() {
   /** Supprime définitivement un rapport de ce navigateur. */
   function handleConfirmDelete() {
     if (!deleteTarget) return
-    deleteDraft(deleteTarget.sessionUuid)
+    // Rapport d'exemple : on retire aussi son carnet fictif
+    if (deleteTarget.exemple) supprimerExemple()
+    else deleteDraft(deleteTarget.sessionUuid)
     setDrafts(findExistingDrafts())
     setDeleteTarget(null)
   }
@@ -131,7 +137,8 @@ export default function Accueil() {
             ))}
           </ol>
           <div style={s.decouverteActions}>
-            <button onClick={() => navigate('/guide')} style={s.ctaPrimary}>Voir le guide</button>
+            <button onClick={demarrerExemple} style={s.ctaPrimary}>🧪 Essayer avec un exemple</button>
+            <button onClick={() => navigate('/guide')} style={s.ctaSecondary}>Voir le guide</button>
             <button
               onClick={() => { masquerAide('accueil-decouverte'); setCarteDecouverte(false) }}
               style={s.linkMuted}
@@ -144,6 +151,7 @@ export default function Accueil() {
 
       <div style={s.actions}>
         <button onClick={handleNew} style={s.ctaPrimary}>+ Nouveau rapport</button>
+        <button onClick={demarrerExemple} style={s.ctaSecondary} title="Rapport fictif et visite guidée, sans drone">🧪 Essayer avec un exemple</button>
         <button onClick={() => importRef.current?.click()} style={s.ctaSecondary}>Importer un rapport ou un carnet (.json)</button>
         <button onClick={() => navigate('/terrain')} style={s.ctaSecondary}>Notes terrain</button>
         <input ref={importRef} type="file" accept="application/json,.json" hidden onChange={handleImport} />
@@ -174,7 +182,10 @@ export default function Accueil() {
             {drafts.map((d) => (
               <div key={d.sessionUuid} style={s.card}>
                 <div style={s.cardInfo}>
-                  <span style={s.cardTitle}>{titreRapport(d)}</span>
+                  <span style={s.cardTitle}>
+                    {titreRapport(d)}
+                    {d.exemple && <span style={s.badgeExemple}>Exemple</span>}
+                  </span>
                   <span style={s.cardDate}>Créé le {formatDate(d.createdAt)}</span>
                 </div>
                 <div style={s.cardActions}>
@@ -247,6 +258,7 @@ const s: Record<string, React.CSSProperties> = {
   friseAppareil: { fontSize: 11.5, color: '#5a7083' },
   decouverteActions: { display: 'flex', alignItems: 'center', gap: 16, marginTop: 14, flexWrap: 'wrap' },
   linkMuted: { background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#5a7083', fontSize: 13, fontFamily: 'inherit' },
+  badgeExemple: { marginLeft: 8, fontSize: 11, fontWeight: 700, color: '#c07828', background: '#fef3e2', borderRadius: 999, padding: '2px 8px', verticalAlign: 'middle' },
   info: { color: '#1a2e44', background: '#eef4f9', borderRadius: 8, padding: '8px 12px', fontSize: 13, marginTop: 10 },
   section: { marginTop: 36 },
   sectionTitle: { fontSize: 13, fontWeight: 700, color: '#8a9eb0', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 12 },

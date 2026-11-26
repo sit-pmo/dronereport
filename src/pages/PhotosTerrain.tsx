@@ -7,6 +7,7 @@ import { storePhotoLocally } from '../lib/localPhoto'
 import { readPhotoMeta } from '../lib/photoMeta'
 import { downscaleImage } from '../lib/imageUtils'
 import AideEcran from '../components/AideEcran'
+import { chargerPhotosExemple } from '../lib/exemple'
 
 const MAX_FILE_SIZE_MB = 30
 const TERRAIN_MAX_WIDTH = 1200
@@ -50,6 +51,20 @@ export default function PhotosTerrain() {
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files ?? [])
     e.target.value = ''
+    await ajouterFichiers(files)
+  }
+
+  /** Rapport d'exemple : charge les 3 photos dessinées comme si on les avait choisies. */
+  async function handlePhotosExemple() {
+    try {
+      await ajouterFichiers(await chargerPhotosExemple())
+    } catch {
+      alert("Impossible de charger les photos d'exemple. Vérifiez la connexion et rechargez la page.")
+    }
+  }
+
+  /** Ajoute des photos au rapport : lecture EXIF, réduction, stockage local. */
+  async function ajouterFichiers(files: File[]) {
     if (!files.length || !draftRef.current) return
 
     const newPhotos: PhotoItem[] = files.map((f) => ({
@@ -113,6 +128,16 @@ export default function PhotosTerrain() {
       <button onClick={() => fileInputRef.current?.click()} style={s.addBtn}>
         + Ajouter des photos
       </button>
+      {/* Rapport d'exemple sans photo encore : proposer les photos dessinées */}
+      {draft?.exemple && photos.length === 0 && (
+        <button
+          onClick={handlePhotosExemple}
+          data-tour="photos-exemple"
+          style={{ ...s.addBtn, background: '#fef3e2', color: '#1a2e44', border: '1.5px solid #f3d9b1', marginLeft: 12 }}
+        >
+          🧪 Charger les 3 photos d'exemple
+        </button>
+      )}
       <input
         ref={fileInputRef}
         type="file"
@@ -125,7 +150,7 @@ export default function PhotosTerrain() {
       {photos.length > 0 && (
         <div style={s.list}>
           {[...photos].sort((a, b) => (a.meta?.prisLe ?? "~").localeCompare(b.meta?.prisLe ?? "~")).map((photo) => (
-            <div key={photo.id} style={s.row}>
+            <div key={photo.id} style={s.row} data-tour="photo-ligne">
               <div style={s.thumb}>
                 {photo.status === 'done' && photo.storageUrl
                   ? <img src={photo.storageUrl} alt="" style={s.thumbImg} />
@@ -154,7 +179,7 @@ export default function PhotosTerrain() {
               </div>
               <div style={s.actions}>
                 {photo.status === 'done' && (
-                  <button onClick={() => navigate(`/annotate-terrain/${photo.id}`)} style={s.annotateBtn}>
+                  <button onClick={() => navigate(`/annotate-terrain/${photo.id}`)} style={s.annotateBtn} data-tour="annoter">
                     ✏ Annoter
                   </button>
                 )}
@@ -169,13 +194,14 @@ export default function PhotosTerrain() {
       )}
 
       {hasDone && (
-        <button onClick={() => navigate('/rattacher-notes')} style={{ ...s.addBtn, background: '#fff', color: '#1a2e44', border: '1.5px solid #c9d3dc', marginTop: 24 }}>
+        <button onClick={() => navigate('/rattacher-notes')} data-tour="rattacher" style={{ ...s.addBtn, background: '#fff', color: '#1a2e44', border: '1.5px solid #c9d3dc', marginTop: 24 }}>
           📝 Rattacher les notes terrain
         </button>
       )}
 
       <button
         onClick={() => navigate('/preview')}
+        data-tour="generer-apercu"
         disabled={!hasDone}
         style={{ ...s.cta, ...(!hasDone ? s.ctaOff : {}), marginTop: 32 }}
       >

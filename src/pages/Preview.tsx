@@ -145,10 +145,10 @@ export default function Preview() {
 
       {isReady && (
         <div style={s.actions}>
-          <button onClick={handleDownload} disabled={downloading} style={s.cta}>
+          <button onClick={handleDownload} disabled={downloading} style={s.cta} data-tour="telecharger-pdf">
             {downloading ? 'Génération en cours…' : 'Télécharger le PDF →'}
           </button>
-          <button onClick={() => exportDraftFile(draft)} style={s.ctaSubscribe}>
+          <button onClick={() => exportDraftFile(draft)} style={s.ctaSubscribe} data-tour="enregistrer-json">
             Enregistrer le rapport (.json) pour le reprendre plus tard
           </button>
           {downloadError && <p style={s.errorText}>{downloadError}</p>}

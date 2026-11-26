@@ -75,8 +75,7 @@
           "cible": {
             "texte": "Importer un rapport ou un carnet (.json)"
           },
-          "legende": "Choisir le fichier .json reçu du téléphone.",
-          "position": "haut"
+          "legende": "Choisir le fichier .json reçu du téléphone."
         },
         {
           "n": 2,

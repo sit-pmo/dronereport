@@ -1,5 +1,5 @@
 """
-Génère les photos d'exemple du guide : toitures DESSINÉES (aucune vraie photo),
+Génère les photos d'exemple (mode « Essayer avec un exemple » et captures du guide) : toitures DESSINÉES (aucune vraie photo),
 avec des métadonnées EXIF imitant un drone DJI (heure de prise de vue, GPS).
 
 Ces fichiers sont publics (dépôt GitHub) : aucune donnée réelle.
@@ -14,7 +14,10 @@ import random
 
 from PIL import Image, ImageDraw, ImageFilter
 
-DOSSIER = Path(__file__).parent / "exemple"
+# Photos servies par le site (public/exemple/) ; plan fictif réservé au script de captures
+RACINE = Path(__file__).resolve().parents[2]
+DOSSIER = RACINE / "public" / "exemple"
+DOSSIER_PLAN = Path(__file__).parent / "exemple"
 LARGEUR, HAUTEUR = 1200, 900
 
 # Heure « murale » du drone (sans fuseau), une photo toutes les ~3 min
@@ -101,8 +104,9 @@ def main() -> None:
         gps[3], gps[4] = ("W" if lon < 0 else "E"), dms(lon)
         img.save(DOSSIER / nom, quality=82, exif=exif)
         print("écrit", DOSSIER / nom)
-    plan_fictif().save(DOSSIER / "plan-fictif.png")
-    print("écrit", DOSSIER / "plan-fictif.png")
+    DOSSIER_PLAN.mkdir(exist_ok=True)
+    plan_fictif().save(DOSSIER_PLAN / "plan-fictif.png")
+    print("écrit", DOSSIER_PLAN / "plan-fictif.png")
 
 
 if __name__ == "__main__":

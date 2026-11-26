@@ -67,7 +67,7 @@ export default function AnnotateTerrain() {
   return (
     <main style={s.main}>
       <div style={se.bar}>
-        <button onClick={() => navigate('/photos-terrain')} style={se.backBtn}>← Retour</button>
+        <button onClick={() => navigate('/photos-terrain')} style={se.backBtn} data-tour="retour-photos">← Retour</button>
         <div style={se.tools}>
           <span style={se.toolLabel}>Outil :</span>
           {(['pin', 'rect', 'polygon', 'pan'] as const).map((tool) => (
@@ -102,7 +102,7 @@ export default function AnnotateTerrain() {
             Point : cliquer · Rectangle : cliquer-glisser · Polygone : cliquer chaque sommet puis refermer sur le premier (ou ↵) · Main : déplacer l'image
           </p>
         </div>
-        <div style={se.list}>
+        <div style={se.list} data-tour="annotations">
           <p style={se.listTitle}>Annotations ({annotations.length})</p>
           {annotations.length === 0 && (
             <p style={se.listEmpty}>Sélectionnez un outil puis cliquez sur la photo.</p>

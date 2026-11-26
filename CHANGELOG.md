@@ -3,6 +3,9 @@
 ## [Non publié]
 
 ### Ajouté
+- « 🧪 Essayer avec un exemple » : rapport et carnet fictifs (toitures dessinées) et visite guidée
+  dans l'appli (driver.js) qui fait faire tout le parcours, des notes au PDF. Reprise et suppression
+  de l'exemple depuis le menu de gauche ; badge « Exemple » dans la liste des rapports.
 - Tutoriel pour une première utilisation :
   - carte « Première fois ? » sur l'accueil (parcours en 5 étapes, masquable) ;
   - page « Guide » (menu de gauche, et lien depuis Notes terrain sur téléphone) ;

@@ -169,7 +169,7 @@ export default function Photos() {
             </>
           ) : (
             <>
-              <div style={s.choiceCardPrimary}>
+              <div style={s.choiceCardPrimary} data-tour="choix-ortho">
                 <span style={s.choiceBadge}>★ Recommandé</span>
                 <p style={s.choiceTitle}>Photo ortho ou nadir</p>
                 <p style={s.choiceDesc}>
@@ -191,7 +191,7 @@ export default function Photos() {
                   vos anomalies sur vos photos terrain individuelles.{' '}
                   <strong>Qualité réduite — privilégiez l'ortho si possible.</strong>
                 </p>
-                <button onClick={() => navigate('/situation')} style={s.choiceBtnSecondary}>
+                <button onClick={() => navigate('/situation')} style={s.choiceBtnSecondary} data-tour="sans-ortho">
                   Continuer sans ortho →
                 </button>
               </div>

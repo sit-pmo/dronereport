@@ -190,7 +190,7 @@ export default function SituationMap() {
         Cliquez sur la carte pour placer le marqueur · Zoomez sur le bâtiment · Glissez le marqueur pour l'ajuster
       </p>
 
-      <button onClick={capture} disabled={capturing} style={{ ...s.cta, ...(capturing ? s.ctaOff : {}) }}>
+      <button onClick={capture} disabled={capturing} data-tour="capturer-plan" style={{ ...s.cta, ...(capturing ? s.ctaOff : {}) }}>
         {capturing ? 'Capture en cours…' : 'Capturer ce plan de situation →'}
       </button>
     </main>
