@@ -22,7 +22,7 @@
             "css": "button[type='submit']"
           },
           "legende": "« Nouveau » crée le carnet et l'ouvre.",
-          "position": "haut"
+          "position": "bas"
         }
       ]
     },

@@ -7,7 +7,7 @@ import { join } from 'node:path'
 import { creerExemple, supprimerExemple, carnetExemple, ID_CARNET_EXEMPLE, PHOTOS_EXEMPLE } from '../lib/exemple'
 import { findExistingDrafts } from '../lib/reportDraft'
 import { getCarnet } from '../lib/notesTerrain'
-import { ETAPES_VISITE, etapeDeReprise } from '../lib/visiteGuidee'
+import { ETAPES_VISITE, ETAPES_VISITE_TERRAIN, etapeDeReprise } from '../lib/visiteGuidee'
 
 beforeEach(() => {
   localStorage.clear()
@@ -64,7 +64,7 @@ describe('visite guidée', () => {
     const sources = ['src/pages', 'src/components']
       .flatMap((dir) => readdirSync(dir).filter((f) => f.endsWith('.tsx')).map((f) => readFileSync(join(dir, f), 'utf8')))
       .join('\n')
-    for (const e of ETAPES_VISITE) {
+    for (const e of [...ETAPES_VISITE, ...ETAPES_VISITE_TERRAIN]) {
       if (!e.element) continue
       const tour = e.element.match(/data-tour="([^"]+)"/)
       const guide = e.element.match(/data-guide="([^"]+)"/)
@@ -77,8 +77,10 @@ describe('visite guidée', () => {
   })
 
   it('se termine par une bulle sans élément, et chaque étape « clic » vise un élément', () => {
-    expect(ETAPES_VISITE.at(-1)?.element).toBeUndefined()
-    for (const e of ETAPES_VISITE) if (e.action === 'clic') expect(e.element).toBeTruthy()
+    for (const etapes of [ETAPES_VISITE, ETAPES_VISITE_TERRAIN]) {
+      expect(etapes.at(-1)?.element).toBeUndefined()
+      for (const e of etapes) if (e.action) expect(e.element).toBeTruthy()
+    }
   })
 
   it('reprend à la dernière étape vue si elle est sur l\'écran, sinon au début de l\'écran', () => {

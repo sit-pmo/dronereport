@@ -16,3 +16,4 @@
 2026-11-26 | Visite guidée dans l'appli avec driver.js (MIT, sans dépendance, version 1.11.0 de plus de 2 semaines), chargée à la demande | Robuste (attente des éléments entre écrans, avance au clic) pour un coût minime ; rien à charger tant qu'on ne lance pas la visite
 2026-11-26 | Rapport d'exemple fictif (« Essayer avec un exemple ») : adresse limitée à la commune, photos dessinées servies par le site | Apprendre en faisant, sans drone ; aucune donnée réelle dans le dépôt public
 2026-11-26 | Visite guidée limitée à l'ordinateur ; la prise de notes au téléphone reste expliquée par le Guide | Les écrans rapport sont réservés au PC ; le carnet de l'exemple remplace la phase téléphone
+2026-11-26 | Visite guidée téléphone sur un carnet d'essai créé par l'utilisateur (pas de carnet d'exemple pré-rempli) | Sur le terrain, le geste à apprendre est la saisie elle-même ; le carnet d'essai se supprime avec 🗑

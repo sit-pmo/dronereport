@@ -1,8 +1,11 @@
 /**
  * Visite guidée dans l'application (bibliothèque driver.js, licence MIT).
  *
- * Elle accompagne le rapport d'exemple (lib/exemple.ts) du formulaire mission
- * jusqu'au PDF : l'écran s'assombrit, une bulle pointe le vrai bouton.
+ * Deux parcours :
+ * - « bureau » (ordinateur) : accompagne le rapport d'exemple (lib/exemple.ts)
+ *   du formulaire mission jusqu'au PDF ;
+ * - « terrain » (téléphone) : la prise de notes, sur un carnet d'essai.
+ * L'écran s'assombrit, une bulle pointe le vrai bouton.
  * - Étape « suivant » : on lit, puis « Suivant ».
  * - Étape « clic » : on clique soi-même sur le bouton surligné ; la visite
  *   avance et attend que l'écran suivant affiche l'élément visé.
@@ -21,10 +24,16 @@ export interface EtapeVisite {
   element?: string
   titre: string
   texte: string
-  /** « clic » : l'utilisateur clique sur l'élément pour avancer. Défaut : bouton « Suivant ». */
-  action?: 'clic'
+  /**
+   * « clic » : l'utilisateur clique sur l'élément pour avancer ;
+   * « envoi » : il valide le formulaire surligné (taper dans le champ ne fait pas avancer).
+   * Défaut : bouton « Suivant ».
+   */
+  action?: 'clic' | 'envoi'
   /** Côté de la bulle par rapport à l'élément. */
   cote?: 'top' | 'right' | 'bottom' | 'left'
+  /** Étape « clic » : n'avancer qu'au clic sur ce sous-élément de la zone surlignée. */
+  clicSur?: string
 }
 
 /** Sélecteur d'un attribut data-tour. */
@@ -143,12 +152,64 @@ export const ETAPES_VISITE: EtapeVisite[] = [
   },
 ]
 
+/** Visite du mode terrain (téléphone) : prise de notes sur un carnet d'essai. */
+export const ETAPES_VISITE_TERRAIN: EtapeVisite[] = [
+  {
+    route: '/terrain', element: t('terrain-nouveau'), cote: 'bottom', action: 'envoi',
+    titre: 'Un carnet par mission',
+    texte: "Tapez un nom (ex. « Essai »), puis touchez « Nouveau ». En vrai : le nom du bâtiment inspecté.",
+  },
+  {
+    route: '/terrain', element: t('terrain-texte'), cote: 'bottom',
+    titre: 'Ce que vous voyez',
+    texte: "Une note par défaut vu à l'écran du drone. Phrase courte ; le micro du clavier permet de dicter.",
+  },
+  {
+    route: '/terrain', element: t('terrain-gravite'), cote: 'bottom',
+    titre: 'Gravité (facultatif)',
+    texte: 'Si vous la connaissez. Elle reste modifiable au bureau.',
+  },
+  {
+    // Tout le bloc de saisie est surligné (on doit pouvoir écrire et choisir la gravité),
+    // bulle en dessous pour ne pas cacher le champ ; on avance au toucher sur « Ajouter »
+    route: '/terrain', element: t('terrain-saisie'), cote: 'bottom', action: 'clic', clicSur: t('terrain-ajouter'),
+    titre: 'À vous',
+    texte: "Écrivez une note d'essai (ex. « tuile cassée »), puis touchez « + Ajouter la note ».",
+  },
+  {
+    route: '/terrain', element: t('terrain-note'), cote: 'top',
+    titre: 'Heure et position',
+    texte: "Chaque note garde l'heure (et la position si vous l'autorisez). Au bureau, c'est l'heure qui retrouve la photo du drone prise au même moment.",
+  },
+  {
+    route: '/terrain', element: t('terrain-repere'), cote: 'top',
+    titre: 'Pas le temps d\'écrire ?',
+    texte: '« ⏱ Repère » marque juste l\'heure. Vous compléterez au bureau.',
+  },
+  {
+    route: '/terrain', element: t('terrain-exporter'), cote: 'bottom',
+    titre: 'En fin de vol',
+    texte: "« Exporter » envoie le carnet vers l'ordinateur (mail, Teams…). Sur l'ordinateur : « Importer un rapport ou un carnet ».",
+  },
+  {
+    route: '/terrain',
+    titre: "C'est tout !",
+    texte: "Pensez à ouvrir la page avec du réseau avant de partir : elle marche ensuite hors ligne. Ce carnet d'essai se supprime avec 🗑 dans la liste des carnets.",
+  },
+]
+
+/** Parcours disponibles. */
+export type Parcours = 'bureau' | 'terrain'
+const ETAPES: Record<Parcours, EtapeVisite[]> = { bureau: ETAPES_VISITE, terrain: ETAPES_VISITE_TERRAIN }
+
 // ── Pilotage ─────────────────────────────────────────────────────────────────
 
 const CLE_ETAPE = 'dronereport-visite-etape'
 let instance: Driver | null = null
 /** Dernière étape affichée dans la visite en cours (pour savoir si elle est allée au bout). */
 let derniereVue = -1
+/** Parcours de la visite en cours. */
+let parcoursEnCours: Parcours = 'bureau'
 const abonnes = new Set<(active: boolean) => void>()
 
 /** Prévient les composants (bandeau d'exemple) qu'une visite démarre ou s'arrête. */
@@ -196,30 +257,41 @@ export function etapeDeReprise(chemin: string, derniere = lireEtape()): number {
 }
 
 /** Convertit nos étapes en étapes driver.js. */
-function versDriver(): DriveStep[] {
-  return ETAPES_VISITE.map((e, i) => ({
+function versDriver(parcours: Parcours): DriveStep[] {
+  return ETAPES[parcours].map((e, i) => ({
     element: e.element,
-    // Étape « clic » : le clic sur le vrai bouton fait avancer la visite
-    advanceOn: e.action === 'clic' ? 'click' : undefined,
+    // « clic » : le clic sur le vrai bouton fait avancer ; « envoi » : la validation du formulaire
+    advanceOn: e.action === 'envoi'
+      ? 'submit'
+      : e.action === 'clic'
+        ? (e.clicSur
+          ? { event: 'click', when: (_el, _step, o) => !!(o.event.target as Element | null)?.closest(e.clicSur!) }
+          : 'click')
+        : undefined,
     popover: {
       title: e.titre,
       description: e.texte,
       side: e.cote,
       // Pas de retour arrière : l'étape précédente est souvent sur un autre écran
-      showButtons: e.action === 'clic' ? ['close'] : ['next', 'close'],
+      showButtons: e.action ? ['close'] : ['next', 'close'],
     },
-    onHighlighted: () => { derniereVue = i; ecrireEtape(i) },
+    onHighlighted: () => {
+      derniereVue = i
+      // Seule la visite « bureau » se reprend (encart du menu)
+      if (parcours === 'bureau') ecrireEtape(i)
+    },
   }))
 }
 
-/** Lance (ou relance) la visite à l'étape `depuis`. */
-export async function lancerVisite(depuis = 0): Promise<void> {
+/** Lance (ou relance) la visite `parcours` à l'étape `depuis`. */
+export async function lancerVisite(depuis = 0, parcours: Parcours = 'bureau'): Promise<void> {
   // Chargé à la demande : la bibliothèque ne pèse rien tant qu'on ne s'en sert pas
   const [{ driver }] = await Promise.all([import('driver.js'), import('driver.js/dist/driver.css')])
   instance?.destroy()
   derniereVue = -1
+  parcoursEnCours = parcours
   instance = driver({
-    steps: versDriver(),
+    steps: versDriver(parcours),
     showProgress: true,
     progressText: 'Étape {{current}} sur {{total}}',
     nextBtnText: 'Suivant →',
@@ -234,8 +306,8 @@ export async function lancerVisite(depuis = 0): Promise<void> {
     stageRadius: 8,
     onDestroyed: () => {
       // Visite finie : on oublie l'étape ; quittée en route : on la garde pour « Reprendre »
-      const fin = derniereVue === ETAPES_VISITE.length - 1
-      if (fin) ecrireEtape(null)
+      const fin = derniereVue === ETAPES[parcoursEnCours].length - 1
+      if (fin && parcoursEnCours === 'bureau') ecrireEtape(null)
       instance = null
       notifier()
     },

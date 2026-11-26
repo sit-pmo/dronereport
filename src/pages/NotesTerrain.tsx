@@ -17,6 +17,7 @@ import {
   lirePosition, exportCarnet,
 } from '../lib/notesTerrain'
 import AideEcran from '../components/AideEcran'
+import { lancerVisite } from '../lib/visiteGuidee'
 
 const GRAVITES: SeverityLevel[] = ['faible', 'modere', 'grave', 'critique']
 
@@ -64,7 +65,12 @@ function ListeCarnets({ carnets, onOpen, onCreate, onDelete, onBureau, onGuide }
         puis « Exporter » le carnet en fin de vol pour l'envoyer vers l'ordinateur.
       </AideEcran>
 
-      <form onSubmit={(e) => { e.preventDefault(); onCreate(titre); setTitre('') }} style={s.newRow}>
+      {/* Visite guidée de la prise de notes (driver.js) */}
+      <button onClick={() => void lancerVisite(0, 'terrain')} style={s.visiteBtn}>
+        🧪 Découvrir en 1 minute (visite guidée)
+      </button>
+
+      <form onSubmit={(e) => { e.preventDefault(); onCreate(titre); setTitre('') }} style={s.newRow} data-tour="terrain-nouveau">
         <input
           value={titre}
           onChange={(e) => setTitre(e.target.value)}
@@ -150,52 +156,56 @@ function Carnet({ carnet, onBack }: { carnet: CarnetTerrain; onBack: () => void 
     <main style={s.main}>
       <div style={s.topBar}>
         <button onClick={onBack} style={s.link}>← Carnets</button>
-        <button onClick={() => exportCarnet({ ...carnet, notes })} style={s.btnSecondary} disabled={!notes.length}>
+        <button onClick={() => exportCarnet({ ...carnet, notes })} style={s.btnSecondary} disabled={!notes.length} data-tour="terrain-exporter">
           Exporter
         </button>
       </div>
       <h1 style={s.title}>{carnet.titre}</h1>
 
-      <textarea
-        ref={inputRef}
-        value={texte}
-        onChange={(e) => setTexte(e.target.value)}
-        placeholder="Ex. tuiles déplacées côté nord, près de la cheminée (micro du clavier pour dicter)"
-        rows={3}
-        style={s.textarea}
-      />
+      {/* Bloc de saisie : surligné en entier par la visite guidée (texte, gravité, boutons) */}
+      <div data-tour="terrain-saisie">
+        <textarea
+          ref={inputRef}
+          value={texte}
+          onChange={(e) => setTexte(e.target.value)}
+          placeholder="Ex. tuiles déplacées côté nord, près de la cheminée (micro du clavier pour dicter)"
+          rows={3}
+          style={s.textarea}
+          data-tour="terrain-texte"
+        />
 
-      <div style={s.graviteRow} role="radiogroup" aria-label="Gravité">
-        {GRAVITES.map((g) => (
-          <button
-            key={g}
-            onClick={() => setGravite(gravite === g ? undefined : g)}
-            role="radio"
-            aria-checked={gravite === g}
-            style={{
-              ...s.chip,
-              borderColor: SEVERITY_COLORS[g],
-              background: gravite === g ? SEVERITY_COLORS[g] : '#fff',
-              color: gravite === g ? '#fff' : '#0f1a25',
-            }}
-          >
-            {SEVERITY_LABELS[g]}
+        <div style={s.graviteRow} role="radiogroup" aria-label="Gravité" data-tour="terrain-gravite">
+          {GRAVITES.map((g) => (
+            <button
+              key={g}
+              onClick={() => setGravite(gravite === g ? undefined : g)}
+              role="radio"
+              aria-checked={gravite === g}
+              style={{
+                ...s.chip,
+                borderColor: SEVERITY_COLORS[g],
+                background: gravite === g ? SEVERITY_COLORS[g] : '#fff',
+                color: gravite === g ? '#fff' : '#0f1a25',
+              }}
+            >
+              {SEVERITY_LABELS[g]}
+            </button>
+          ))}
+        </div>
+
+        <div style={s.actionRow}>
+          <button onClick={ajouter} disabled={enCours || (!texte.trim() && !gravite)} style={{ ...s.btnPrimary, flex: 2 }} data-tour="terrain-ajouter">
+            + Ajouter la note
           </button>
-        ))}
-      </div>
-
-      <div style={s.actionRow}>
-        <button onClick={ajouter} disabled={enCours || (!texte.trim() && !gravite)} style={{ ...s.btnPrimary, flex: 2 }}>
-          + Ajouter la note
-        </button>
-        <button onClick={repere} style={{ ...s.btnSecondary, flex: 1 }} title="Marque l'heure sans texte">
-          ⏱ Repère
-        </button>
+          <button onClick={repere} style={{ ...s.btnSecondary, flex: 1 }} title="Marque l'heure sans texte" data-tour="terrain-repere">
+            ⏱ Repère
+          </button>
+        </div>
       </div>
 
       <div style={s.list}>
         {notes.map((n) => (
-          <div key={n.id} style={s.noteCard}>
+          <div key={n.id} style={s.noteCard} data-tour="terrain-note">
             <div style={s.noteHead}>
               <span style={s.noteTime}>{new Date(n.prisLe).toLocaleTimeString('fr-FR')}</span>
               {n.gravite && <span style={{ ...s.badge, background: SEVERITY_COLORS[n.gravite] }}>{SEVERITY_LABELS[n.gravite]}</span>}
@@ -229,6 +239,11 @@ const s: Record<string, React.CSSProperties> = {
   actionRow: { display: 'flex', gap: 8, marginBottom: 20 },
   btnPrimary: { background: '#0f1a25', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 16px', fontSize: 16, fontWeight: 600, minHeight: 52, cursor: 'pointer', fontFamily: 'inherit' },
   btnSecondary: { background: '#fff', color: '#0f1a25', border: '1.5px solid #c9d3dc', borderRadius: 8, padding: '10px 14px', fontSize: 15, fontWeight: 600, minHeight: 48, cursor: 'pointer', fontFamily: 'inherit' },
+  visiteBtn: {
+    display: 'block', width: '100%', margin: '0 0 16px', padding: '12px 14px', borderRadius: 10,
+    background: '#fef3e2', border: '1.5px solid #f3d9b1', color: '#1a2e44', fontSize: 15, fontWeight: 600,
+    textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit',
+  },
   link: { background: 'none', border: 'none', color: '#c07828', fontSize: 15, fontWeight: 600, padding: '10px 0', cursor: 'pointer', fontFamily: 'inherit' },
   list: { display: 'flex', flexDirection: 'column', gap: 8 },
   card: { display: 'flex', alignItems: 'center', border: '1.5px solid #e4ecf2', borderRadius: 10, background: '#fff' },

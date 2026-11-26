@@ -45,4 +45,8 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 - « 🧪 Essayer avec un exemple » (accueil, guide) : rapport + carnet fictifs (`src/lib/exemple.ts`,
   photos dans `public/exemple/`) et visite guidée en 22 étapes jusqu'au PDF (`src/lib/visiteGuidee.ts`,
   driver.js 1.11.0). Les étapes visent des attributs `data-tour` : ne pas les retirer d'une page
-  (un test vérifie qu'ils existent). Ordinateur seulement. 50 tests unitaires.
+  (un test vérifie qu'ils existent).
+- Visite guidée téléphone (mode terrain) : « 🧪 Découvrir en 1 minute » dans Notes terrain et dans le
+  Guide sur mobile, 8 étapes sur un carnet d'essai (`ETAPES_VISITE_TERRAIN`). Une étape « clic » peut
+  surligner une zone entière et n'avancer qu'au clic sur un bouton (`clicSur`) : sinon le voile
+  empêche d'utiliser les champs voisins. 50 tests unitaires.

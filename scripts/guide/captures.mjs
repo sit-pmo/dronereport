@@ -78,13 +78,19 @@ async function capturer(page, id, { clip } = {}) {
       pastille.textContent = String(b.n)
       // Placement de la pastille :
       // « gauche » (défaut) : à gauche du cadre, centrée (au-dessus si la place manque) ;
-      // « haut » : au-dessus du coin gauche ; « dedans » : dans le cadre, à droite.
+      // « haut » : au-dessus du coin gauche ; « dedans » : dans le cadre, à droite ;
+      // « bas » : sous le cadre, centrée.
       const aGauche = b.position === 'gauche' && b.x - 42 >= bordGauche
       let left = aGauche ? b.x - 42 : Math.max(bordGauche, b.x - 4)
       let top = aGauche ? b.y + b.height / 2 - 15 : Math.max(2, b.y - 40)
       if (b.position === 'dedans') {
         left = b.x + b.width - 40
         top = b.y + b.height / 2 - 15
+      }
+      if (b.position === 'bas') {
+        // Sous le cadre, centrée
+        left = b.x + b.width / 2 - 15
+        top = b.y + b.height + 6
       }
       pastille.style.cssText = `position:absolute;left:${left}px;top:${top}px;width:30px;height:30px;border-radius:50%;background:#c07828;color:#fff;font:700 16px/30px sans-serif;text-align:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35)`
       calque.append(cadre, pastille)

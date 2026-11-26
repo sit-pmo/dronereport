@@ -12,6 +12,7 @@ import { ETAPES_GUIDE, REGLES_GUIDE, capturesEtape, urlCapture, type CaptureGuid
 import { reafficherAides } from '../lib/aidesVues'
 import { useIsMobile } from '../hooks/useIsMobile'
 import { useExemple } from '../hooks/useExemple'
+import { lancerVisite } from '../lib/visiteGuidee'
 
 export default function Guide() {
   const navigate = useNavigate()
@@ -35,6 +36,17 @@ export default function Guide() {
         Un rapport d'inspection en 5 étapes : les notes se prennent au téléphone pendant le vol,
         le rapport se fait ensuite sur ordinateur.
       </p>
+      {/* Sur téléphone : visite guidée de la prise de notes */}
+      {isMobile && (
+        <div style={s.essai}>
+          <div>
+            <strong>Le plus simple : essayer.</strong> Une visite guidée vous fait prendre une note d'essai, en 1 minute.
+          </div>
+          <button onClick={() => { navigate('/terrain'); void lancerVisite(0, 'terrain') }} style={s.essaiBtn}>
+            🧪 Visite guidée
+          </button>
+        </div>
+      )}
       {/* Sur ordinateur : la pratique avant la lecture */}
       {!isMobile && (
         <div style={s.essai}>
