@@ -4,7 +4,7 @@ Outil interne du service SIT (PETR Marennes Oléron, futur SyMONT) pour produire
 des rapports d'inspection de toiture par drone. Dérivé de DroneReport, sans
 paiement, sans compte et sans serveur.
 
-En ligne : https://sit-pmo.github.io/dronereport-collectivite/
+En ligne : https://sit-pmo.github.io/dronereport/
 
 ## Principe : les données restent sur le poste
 
@@ -35,7 +35,7 @@ Données rouges (nominatives, MAJIC, etc.) : ne pas les saisir dans l'outil.
 
 ```powershell
 npm ci
-npm run dev      # http://localhost:5173/dronereport-collectivite/
+npm run dev      # http://localhost:5173/dronereport/
 npm test
 npm run build
 ```
