@@ -33,3 +33,6 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 - Version 1.0.0 : dérivée du SaaS DroneReport (dépôt privé `aurelienchaumet/dronereport`), paiement et cloud retirés.
 - Testée de bout en bout dans Chrome (mobile → PC → PDF) avec des photos factices au format DJI ; 31 tests unitaires.
 - Pas encore testée avec une vraie photo DJI ni sur un vrai téléphone en vol.
+- Publiée sur GitHub Pages (workflow « Publier sur GitHub Pages » vert).
+- Accueil : un carnet de notes terrain s'importe comme un rapport et peut servir de début de rapport
+  (bâtiment, date, adresse proche du GPS, carnet lié). Code : `src/lib/rapportDepuisCarnet.ts`. 37 tests unitaires.

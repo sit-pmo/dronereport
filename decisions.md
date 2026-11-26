@@ -8,3 +8,5 @@
 2026-11-26 | Pas de photo prise au téléphone dans les notes | Le défaut de toiture n'est visible que du drone
 2026-11-26 | Conclusion rédigée par IA (Haiku) retirée | Les données sortiraient de Claude Team
 2026-11-26 | DESIGN.md réduit à la charte graphique | Dépôt public : retirer la stratégie commerciale du SaaS
+2026-11-26 | L'import de l'accueil accepte aussi un carnet de notes terrain et propose d'en faire un début de rapport | Les utilisateurs importaient le carnet au mauvais endroit et recevaient « ce n'est pas un rapport »
+2026-11-26 | Adresse du rapport suggérée par géocodage inverse de la Base Adresse Nationale, à partir du GPS le plus précis du carnet (≤ 150 m) | Service public déjà utilisé pour le plan de situation ; seules les coordonnées sont envoyées, jamais le texte des notes ; l'adresse reste à vérifier

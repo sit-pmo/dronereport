@@ -10,3 +10,4 @@
 - [ ] Prise de notes sur un vrai téléphone, hors réseau, écran au soleil
 - [ ] Export du carnet via « Partager » sur Android et iOS
 - [ ] Plan de situation IGN depuis GitHub Pages (tuiles et géocodage)
+- [ ] Rapport créé depuis un carnet : adresse BAN trouvée en ligne et pertinente (GPS téléphone souvent à ~100 m)
