@@ -1,5 +1,15 @@
 # Changelog
 
+## [Non publié]
+
+### Ajouté
+- Accueil : un carnet de notes terrain s'importe aussi depuis « Importer un rapport ou un carnet ».
+  Il peut servir de début de rapport : bâtiment (titre du carnet), date (première note),
+  adresse proche du GPS (Base Adresse Nationale, à vérifier), carnet déjà lié pour le rattachement.
+
+### Corrigé
+- L'import d'un carnet depuis l'accueil affichait « Ce fichier n'est pas un rapport DroneReport ».
+
 ## [1.0.0] - 2026-11-26 — édition collectivité
 
 Dérivée de DroneReport 0.1.0 (version SaaS).

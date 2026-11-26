@@ -20,7 +20,8 @@ import {
 } from '../lib/reportDraft'
 import { exportDraftFile, parseDraftFile } from '../lib/draftFile'
 import { parseCarnet, saveCarnet } from '../lib/notesTerrain'
-import type { ReportDraft } from '../types'
+import { brouillonDepuisCarnet, meilleurPointGps, adresseProche } from '../lib/rapportDepuisCarnet'
+import type { CarnetTerrain, ReportDraft } from '../types'
 
 export default function Accueil() {
   const navigate = useNavigate()
@@ -29,8 +30,9 @@ export default function Accueil() {
   const [drafts, setDrafts] = useState<ReportDraft[]>(() => findExistingDrafts())
   const [deleteTarget, setDeleteTarget] = useState<ReportDraft | null>(null)
   const [importError, setImportError] = useState<string | null>(null)
-  // Message d'information (ex. : carnet de notes reconnu et gardé sur ce poste)
-  const [importInfo, setImportInfo] = useState<string | null>(null)
+  // Carnet de notes terrain importé depuis l'accueil (proposé pour démarrer un rapport)
+  const [carnetImporte, setCarnetImporte] = useState<CarnetTerrain | null>(null)
+  const [creationEnCours, setCreationEnCours] = useState(false)
   const importRef = useRef<HTMLInputElement>(null)
 
   /** Crée un nouveau rapport vierge et ouvre le formulaire mission. */
@@ -61,7 +63,7 @@ export default function Accueil() {
     e.target.value = ''
     if (!file) return
     setImportError(null)
-    setImportInfo(null)
+    setCarnetImporte(null)
     const text = await file.text()
     try {
       const d = parseDraftFile(text)
@@ -70,19 +72,33 @@ export default function Accueil() {
       setDrafts(findExistingDrafts())
     } catch (err) {
       // Ce n'est pas un rapport : c'est peut-être un carnet de notes terrain
-      // exporté depuis le téléphone. On le garde sur ce poste et on indique
-      // où l'utiliser, plutôt qu'un message d'erreur trompeur.
+      // exporté depuis le téléphone. On le garde sur ce poste et on
+      // propose d'en faire un début de rapport, plutôt qu'un message d'erreur trompeur.
       try {
         const c = parseCarnet(text)
         saveCarnet(c)
-        setImportInfo(
-          `Carnet de notes terrain « ${c.titre} » (${c.notes.length} note${c.notes.length > 1 ? 's' : ''}) enregistré sur ce poste. ` +
-          'Pour l\'utiliser : ouvrez le rapport, ajoutez les photos du drone, puis « Photos terrain » → « Rattacher les notes terrain » et importez ce fichier.',
-        )
+        setCarnetImporte(c)
       } catch {
         setImportError(err instanceof Error ? err.message : 'Fichier illisible')
       }
     }
+  }
+
+  /**
+   * Crée un rapport pré-rempli depuis le carnet importé (bâtiment, date,
+   * adresse proche du GPS) et ouvre le formulaire mission pour compléter.
+   */
+  async function handleRapportDepuisCarnet() {
+    if (!carnetImporte) return
+    setCreationEnCours(true)
+    const gps = meilleurPointGps(carnetImporte)
+    // Adresse suggérée : vide si pas de GPS assez précis ou hors ligne
+    const adresse = gps ? await adresseProche(gps.lat, gps.lon) : ''
+    const d = brouillonDepuisCarnet(carnetImporte, adresse)
+    saveDraft(d)
+    setDraft(d)
+    setCreationEnCours(false)
+    navigate('/mission')
   }
 
   return (
@@ -96,12 +112,26 @@ export default function Accueil() {
 
       <div style={s.actions}>
         <button onClick={handleNew} style={s.ctaPrimary}>+ Nouveau rapport</button>
-        <button onClick={() => importRef.current?.click()} style={s.ctaSecondary}>Importer un rapport (.json)</button>
+        <button onClick={() => importRef.current?.click()} style={s.ctaSecondary}>Importer un rapport ou un carnet (.json)</button>
         <button onClick={() => navigate('/terrain')} style={s.ctaSecondary}>Notes terrain</button>
         <input ref={importRef} type="file" accept="application/json,.json" hidden onChange={handleImport} />
       </div>
       {importError && <p style={s.error}>{importError}</p>}
-      {importInfo && <p style={s.info}>{importInfo}</p>}
+      {carnetImporte && (
+        <div style={s.info}>
+          <p style={{ margin: 0 }}>
+            Carnet de notes terrain « {carnetImporte.titre} » ({carnetImporte.notes.length} note
+            {carnetImporte.notes.length > 1 ? 's' : ''}) enregistré sur ce poste.
+          </p>
+          <p style={{ margin: '6px 0 10px' }}>
+            Vous pouvez démarrer un rapport pré-rempli (bâtiment, date, adresse proche du GPS à vérifier).
+            Les notes se rattachent ensuite aux photos dans « Photos terrain ».
+          </p>
+          <button onClick={handleRapportDepuisCarnet} disabled={creationEnCours} style={s.ctaPrimary}>
+            {creationEnCours ? 'Création…' : 'Créer un rapport à partir de ce carnet'}
+          </button>
+        </div>
+      )}
 
       <section style={s.section}>
         <h2 style={s.sectionTitle}>Rapports sur ce poste</h2>
