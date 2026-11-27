@@ -14,3 +14,8 @@
 - [ ] Visite guidée de l'exemple sur un vrai poste Windows (Chrome / Edge), avec plan IGN réel
 - [ ] Visite guidée terrain sur un vrai téléphone (Android et iOS) : clavier ouvert, bulle lisible
 - [ ] Exemple sur un poste hors fuseau de Paris : notes décalées de l'heure (attendu, réglable par le décalage)
+
+## À trancher
+
+- [ ] Les notes du téléphone ne se rattachent qu'au parcours « sans ortho » (Photos terrain). Avec une ortho, pas de rattachement possible : voulu ou à ajouter ?
+- [ ] Numéro de version : `package.json` indique 0.1.0, le CHANGELOG et AGENTS.md parlent de 1.0.0.

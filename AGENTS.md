@@ -29,7 +29,7 @@ npm run captures # captures du guide (après « npx playwright install chromium 
 
 Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/dronereport/
 
-## État au 2026-11-26
+## État au 2026-11-27
 
 - Version 1.0.0 : dérivée du SaaS DroneReport (dépôt privé `aurelienchaumet/dronereport`), paiement et cloud retirés.
 - Testée de bout en bout dans Chrome (mobile → PC → PDF) avec des photos factices au format DJI ; 31 tests unitaires.
@@ -50,3 +50,4 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
   Guide sur mobile, 8 étapes sur un carnet d'essai (`ETAPES_VISITE_TERRAIN`). Une étape « clic » peut
   surligner une zone entière et n'avancer qu'au clic sur un bouton (`clicSur`) : sinon le voile
   empêche d'utiliser les champs voisins. 50 tests unitaires.
+- Points ouverts : voir `contraintes.md` (« À vérifier » sur matériel réel, « À trancher »).

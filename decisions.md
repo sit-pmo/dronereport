@@ -17,3 +17,4 @@
 2026-11-26 | Rapport d'exemple fictif (« Essayer avec un exemple ») : adresse limitée à la commune, photos dessinées servies par le site | Apprendre en faisant, sans drone ; aucune donnée réelle dans le dépôt public
 2026-11-26 | Visite guidée limitée à l'ordinateur ; la prise de notes au téléphone reste expliquée par le Guide | Les écrans rapport sont réservés au PC ; le carnet de l'exemple remplace la phase téléphone
 2026-11-26 | Visite guidée téléphone sur un carnet d'essai créé par l'utilisateur (pas de carnet d'exemple pré-rempli) | Sur le terrain, le geste à apprendre est la saisie elle-même ; le carnet d'essai se supprime avec 🗑
+2026-11-27 | La décision « Visite guidée limitée à l'ordinateur » (26/11) est remplacée : une visite téléphone existe pour la prise de notes | Demande d'une version mobile ; la visite ordinateur reste la seule à suivre le rapport jusqu'au PDF
