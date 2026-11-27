@@ -13,6 +13,7 @@ import {
   Rect,
 } from '@react-pdf/renderer'
 import type { ReportDraft, PhotoAnnotation } from '../types'
+import { numeroSurLePlan } from './reperesPhotos'
 import { SEVERITY_LABELS, EXPLOITANT_LABELS, CATEGORIE_VOL_LABELS, INSPECTION_LABELS, getDefaultMissionLimitations, PV_ANOMALY_TYPES, PV_CUSTOM_SHAPE, PV_CUSTOM_COLOR, PV_CUSTOM_LABEL, type AnomalyShape } from './constants'
 
 const SEVERITY_HEX: Record<string, string> = {
@@ -71,7 +72,12 @@ const pdf = StyleSheet.create({
   coverPhotoImg: { width: '100%', height: 300, objectFit: 'contain' },
   terrainPhotoWrap: { position: 'relative', width: '100%', marginBottom: 6 },
   terrainPhotoImg: { width: '100%' },
-  terrainPhotoTitle: { fontSize: 11, fontWeight: 700, color: '#1a2e44', marginBottom: 6 },
+  terrainPhotoTitle: { fontSize: 11, fontWeight: 700, color: '#1a2e44' },
+  terrainTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 6 },
+  // Pastille du repère photo : mêmes couleurs que sur le plan capturé (marine, numéro blanc)
+  repereBadge: { width: 16, height: 16, borderRadius: 8, backgroundColor: '#1a2e44', alignItems: 'center', justifyContent: 'center' },
+  repereBadgeText: { fontSize: 8, fontWeight: 700, color: '#ffffff' },
+  repereNote: { fontSize: 8, color: '#5a7083', marginTop: -2, marginBottom: 6 },
 })
 
 function DroneReportLogo({ size = 28 }: { size?: number }) {
@@ -356,6 +362,8 @@ export function ReportPDF({ draft, photoDataUrls }: Props) {
           {/* Pages 3+ sans-ortho — Photos terrain annotées */}
           {(draft.photos ?? []).filter((p) => p.status === 'done').map((photo, photoIdx) => {
             const photoAnnotations = photo.annotations ?? []
+            // Repère du même numéro dessiné sur le plan de situation (page 1), s'il est à jour
+            const repere = numeroSurLePlan(draft, photo.id)
             const sevCount = { faible: 0, modere: 0, grave: 0, critique: 0 }
             for (const a of photoAnnotations) {
               if (a.severity in sevCount) sevCount[a.severity as keyof typeof sevCount]++
@@ -363,9 +371,20 @@ export function ReportPDF({ draft, photoDataUrls }: Props) {
             return (
               <Page key={photo.id} size="A4" style={pdf.page}>
                 <ReportHeader draft={draft} fixed />
-                <Text style={pdf.terrainPhotoTitle}>
-                  Photo {photoIdx + 1}{photo.name ? ` — ${photo.name}` : ''}{photo.meta?.prisLe ? ` — ${photo.meta.prisLe.slice(11, 16)}` : ''}
-                </Text>
+                <View style={pdf.terrainTitleRow}>
+                  {/* Pastille = repère du même numéro sur le plan de situation (page 1) */}
+                  {repere !== undefined && (
+                    <View style={pdf.repereBadge}>
+                      <Text style={pdf.repereBadgeText}>{repere}</Text>
+                    </View>
+                  )}
+                  <Text style={pdf.terrainPhotoTitle}>
+                    Photo {photoIdx + 1}{photo.name ? ` — ${photo.name}` : ''}{photo.meta?.prisLe ? ` — ${photo.meta.prisLe.slice(11, 16)}` : ''}
+                  </Text>
+                </View>
+                {repere !== undefined && (
+                  <Text style={pdf.repereNote}>Repère {repere} sur le plan de situation</Text>
+                )}
                 <View style={pdf.severityGrid}>
                   {([ ['faible', 'Faible'], ['modere', 'Modéré'], ['grave', 'Grave'], ['critique', 'Critique'] ] as const).map(
                     ([key, label]) => (

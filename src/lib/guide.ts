@@ -68,6 +68,7 @@ export const ETAPES_GUIDE: EtapeGuide[] = [
       "Sans ortho : « Continuer sans ortho », faire le plan de situation IGN, puis « Photos terrain » et importer les photos du drone.",
       "Pour reprendre les notes du téléphone : « Photos terrain » → « Rattacher les notes terrain ». Chaque note est proposée sur la photo prise au même moment ; corriger si besoin, valider.",
       'Ouvrir chaque photo et déplacer le point sur le défaut.',
+      "Pour situer les photos : « Photos terrain » → « 📍 Localiser les photos sur le plan ». Glisser chaque repère numéroté sur ce que montre la photo (le GPS est celui du drone), placer à la main les photos sans GPS, puis recapturer le plan.",
     ],
     piege: "Importer les photos d'origine, copiées depuis la carte SD : une photo passée par une messagerie perd l'heure et le GPS, et le rattachement ne marche plus. Si toutes les notes tombent à côté, l'horloge du drone est décalée : régler « Décalage horloge drone ».",
   },

@@ -53,4 +53,7 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
   Guide sur mobile, 8 étapes sur un carnet d'essai (`ETAPES_VISITE_TERRAIN`). Une étape « clic » peut
   surligner une zone entière et n'avancer qu'au clic sur un bouton (`clicSur`) : sinon le voile
   empêche d'utiliser les champs voisins. 55 tests unitaires.
+- Plan de situation (sans ortho) : repères numérotés des photos terrain (numéro = « Photo N » du PDF),
+  déplaçables, position corrigée dans `PhotoItem.position` (`meta.gps` intact). Logique pure dans
+  `src/lib/reperesPhotos.ts` ; le PDF renvoie au repère tant que le plan est à jour (`ignPlanReperes`).
 - Points ouverts : voir `contraintes.md` (« À vérifier » sur matériel réel, « À trancher »).
