@@ -2,6 +2,12 @@
 
 ## [Non publié]
 
+### Changé
+- Fin de « l'édition collectivité » : l'application s'appelle simplement DroneReport (menu, accueil,
+  titre, appli installée, pied de page du PDF, paquet npm). Le projet SaaS est abandonné.
+- Fichiers .json exportés avec le marqueur `dronereport/rapport` et `dronereport/carnet` ; les fichiers
+  plus anciens (`dronereport-collectivite/…`) s'importent toujours.
+
 ### Ajouté
 - « 🧪 Essayer avec un exemple » : rapport et carnet fictifs (toitures dessinées) et visite guidée
   dans l'appli (driver.js) qui fait faire tout le parcours, des notes au PDF. Reprise et suppression

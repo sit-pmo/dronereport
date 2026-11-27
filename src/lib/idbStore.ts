@@ -9,6 +9,8 @@
  * sur un serveur.
  */
 
+// Nom historique conservé volontairement : le changer ferait « perdre » aux navigateurs
+// les rapports et carnets déjà enregistrés (IndexedDB est rangée par nom de base).
 const DB_NAME = 'dronereport-collectivite'
 const DB_VERSION = 1
 /** Un seul « store » : les brouillons de rapport, indexés par sessionUuid. */

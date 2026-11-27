@@ -1,4 +1,4 @@
-# Produit — édition collectivité
+# Produit
 
 ## Utilisateurs
 

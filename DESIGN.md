@@ -1,6 +1,6 @@
 # DESIGN.md — charte graphique
 
-Charte visuelle reprise de DroneReport. Seule cette partie s'applique à l'édition collectivité.
+Charte visuelle de DroneReport.
 
 ## Design System Visuel
 

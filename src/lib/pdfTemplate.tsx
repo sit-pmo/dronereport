@@ -112,7 +112,7 @@ function ReportHeader({ draft, fixed }: { draft: ReportDraft; fixed?: boolean })
 function PageFooter() {
   return (
     <View style={pdf.footer} fixed>
-      <Text>DroneReport (édition collectivité) — rapport généré automatiquement</Text>
+      <Text>DroneReport — rapport généré automatiquement</Text>
       <Text render={({ pageNumber, totalPages }) => `Page ${pageNumber} / ${totalPages}`} />
     </View>
   )

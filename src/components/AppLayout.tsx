@@ -3,7 +3,7 @@ import { useDraft } from '../hooks/useDraft'
 import type { ReactNode } from 'react'
 import BandeauExemple from './BandeauExemple'
 
-// Étapes du parcours (édition collectivité : plus d'étape Paiement)
+// Étapes du parcours (sans étape Paiement : outil gratuit, sans compte)
 const STEPS = [
   { path: '/app', label: 'Accueil', n: 1 },
   { path: '/mission', label: 'Mission', n: 2 },
@@ -40,7 +40,6 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         <div style={{ ...sb.brand, flexWrap: 'wrap' }}>
           <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" style={sb.brandLogo} />
           <span style={sb.brandName}>DroneReport</span>
-          <span style={sb.brandTag}>collectivité</span>
         </div>
 
         <nav style={sb.nav}>
@@ -95,7 +94,6 @@ const sb: Record<string, React.CSSProperties> = {
     cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
   },
   guideLinkActive: { background: 'rgba(255,255,255,0.1)', color: '#fff', fontWeight: 600 },
-  brandTag: { fontSize: 10.5, fontWeight: 700, color: '#c07828', textTransform: 'uppercase', letterSpacing: '0.05em', flexBasis: '100%', paddingLeft: 38, marginTop: -6 },
   footerNote: { marginTop: 'auto', fontSize: 11.5, color: '#8a9eb0', lineHeight: 1.5, padding: '16px 20px' },
   brand: {
     padding: '28px 20px 20px',

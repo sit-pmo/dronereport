@@ -65,7 +65,7 @@ export interface MissionInfos {
   notes?: string
   objetMission?: string
   methodologie?: string
-  // ── Édition collectivité ──────────────────────────────────────
+  // ── Mission : bâtiment, exploitant, vol ───────────────────────
   batiment?: string          // nom du bâtiment inspecté (ex. « Gymnase municipal »)
   refPatrimoine?: string     // référence dans l'inventaire du patrimoine bâti
   exploitant?: Exploitant    // structure exploitante UAS (porte la responsabilité du vol)

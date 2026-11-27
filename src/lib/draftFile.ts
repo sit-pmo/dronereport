@@ -8,11 +8,13 @@
 import type { ReportDraft } from '../types'
 
 /** Marqueur de format, pour refuser un fichier qui n'est pas un rapport. */
-const FORMAT = 'dronereport-collectivite/rapport'
+const FORMAT = 'dronereport/rapport'
+/** Ancien marqueur (fichiers exportés avant le 27/11/2026) : toujours accepté à l'import. */
+const FORMAT_ANCIEN = 'dronereport-collectivite/rapport'
 const VERSION = 1
 
 interface DraftFile {
-  format: typeof FORMAT
+  format: typeof FORMAT | typeof FORMAT_ANCIEN
   version: number
   exportedAt: string
   draft: ReportDraft
@@ -55,8 +57,8 @@ export function parseDraftFile(text: string): ReportDraft {
   } catch {
     throw new Error("Ce fichier n'est pas un JSON valide.")
   }
-  if (data.format !== FORMAT || !data.draft?.sessionUuid) {
-    throw new Error("Ce fichier n'est pas un rapport DroneReport (édition collectivité).")
+  if ((data.format !== FORMAT && data.format !== FORMAT_ANCIEN) || !data.draft?.sessionUuid) {
+    throw new Error("Ce fichier n'est pas un rapport DroneReport.")
   }
   if ((data.version ?? 0) > VERSION) {
     throw new Error('Ce rapport vient d\'une version plus récente de l\'outil. Rechargez la page.')

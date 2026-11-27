@@ -1,11 +1,11 @@
-# DroneReport, édition collectivité
+# DroneReport
 
 Outil interne du SIT (PETR Marennes Oléron / SyMONT) : notes terrain sur téléphone et rapports PDF d'inspection de toiture par drone. Dépôt public : aucun secret, aucune donnée.
 
 ## Design
 
 Lire `DESIGN.md` avant toute décision visuelle (palette, polices, espacements).
-Les parties « produit / tarifs » de DESIGN.md concernent la version SaaS d'origine et ne s'appliquent pas ici.
+DESIGN.md ne contient plus que la charte graphique (la partie « produit / tarifs » de l'ancienne version SaaS a été retirée).
 
 ## Contraintes d'architecture
 
@@ -31,7 +31,9 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 
 ## État au 2026-11-27
 
-- Version 1.0.0 : dérivée du SaaS DroneReport (dépôt privé `aurelienchaumet/dronereport`), paiement et cloud retirés.
+- Version 1.0.0 : reprise de l'ancienne version SaaS (dépôt privé `aurelienchaumet/dronereport`), paiement et cloud retirés.
+  Projet SaaS abandonné le 27/11/2026 : ce dépôt est désormais LE projet DroneReport (plus d'« édition collectivité »).
+  Seul reste le nom de la base IndexedDB `dronereport-collectivite`, gardé pour ne pas perdre les données des navigateurs.
 - Testée de bout en bout dans Chrome (mobile → PC → PDF) avec des photos factices au format DJI ; 31 tests unitaires.
 - Pas encore testée avec une vraie photo DJI ni sur un vrai téléphone en vol.
 - Publiée sur GitHub Pages (workflow « Publier sur GitHub Pages » vert).
@@ -49,5 +51,5 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 - Visite guidée téléphone (mode terrain) : « 🧪 Découvrir en 1 minute » dans Notes terrain et dans le
   Guide sur mobile, 8 étapes sur un carnet d'essai (`ETAPES_VISITE_TERRAIN`). Une étape « clic » peut
   surligner une zone entière et n'avancer qu'au clic sur un bouton (`clicSur`) : sinon le voile
-  empêche d'utiliser les champs voisins. 50 tests unitaires.
+  empêche d'utiliser les champs voisins. 55 tests unitaires.
 - Points ouverts : voir `contraintes.md` (« À vérifier » sur matériel réel, « À trancher »).

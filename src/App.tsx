@@ -1,5 +1,5 @@
 /**
- * Routage de l'édition collectivité.
+ * Routage de l'application.
  *
  * HashRouter (URL en /#/mission) : GitHub Pages ne sait pas renvoyer
  * index.html pour une URL inconnue, le hash évite les 404 au rechargement.

@@ -1,5 +1,5 @@
 /**
- * Accueil de l'édition collectivité.
+ * Accueil de l'application.
  *
  * - Liste des rapports stockés dans ce navigateur (IndexedDB).
  * - Création, reprise, suppression d'un rapport.
@@ -117,7 +117,7 @@ export default function Accueil() {
       <div style={s.hero}>
         <h1 style={s.title}>Rapports d'inspection drone</h1>
         <p style={s.subtitle}>
-          Édition collectivité. Les données restent dans ce navigateur : rien n'est envoyé sur un serveur.
+          Les données restent dans ce navigateur : rien n'est envoyé sur un serveur.
         </p>
       </div>
 

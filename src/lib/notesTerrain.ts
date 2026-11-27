@@ -67,7 +67,9 @@ export function lirePosition(): Promise<NoteTerrain['gps']> {
 
 // ── Export / import ─────────────────────────────────────────────────────────
 
-const FORMAT = 'dronereport-collectivite/carnet'
+const FORMAT = 'dronereport/carnet'
+/** Ancien marqueur (carnets exportés avant le 27/11/2026) : toujours accepté à l'import. */
+const FORMAT_ANCIEN = 'dronereport-collectivite/carnet'
 
 /** Contenu du fichier d'échange téléphone → PC. */
 export function carnetToJson(c: CarnetTerrain): object {
@@ -108,7 +110,7 @@ export function parseCarnet(text: string): CarnetTerrain {
   } catch {
     throw new Error("Ce fichier n'est pas un JSON valide.")
   }
-  if (data.format !== FORMAT || !data.carnet?.id || !Array.isArray(data.carnet.notes)) {
+  if ((data.format !== FORMAT && data.format !== FORMAT_ANCIEN) || !data.carnet?.id || !Array.isArray(data.carnet.notes)) {
     throw new Error("Ce fichier n'est pas un carnet de notes terrain.")
   }
   return data.carnet

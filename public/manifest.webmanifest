@@ -1,5 +1,5 @@
 {
-  "name": "DroneReport — édition collectivité",
+  "name": "DroneReport",
   "short_name": "DroneReport",
   "description": "Notes terrain et rapports d'inspection drone (données stockées localement)",
   "start_url": "./#/",

@@ -1,8 +1,8 @@
-# DroneReport — édition collectivité
+# DroneReport
 
-Outil interne du service SIT (PETR Marennes Oléron, futur SyMONT) pour produire
-des rapports d'inspection de toiture par drone. Dérivé de DroneReport, sans
-paiement, sans compte et sans serveur.
+Outil du service SIT (PETR Marennes Oléron, futur SyMONT) pour produire
+des rapports d'inspection de toiture par drone : notes terrain au téléphone,
+rapport PDF au bureau. Sans paiement, sans compte et sans serveur.
 
 En ligne : https://sit-pmo.github.io/dronereport/
 

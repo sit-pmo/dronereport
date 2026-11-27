@@ -137,7 +137,7 @@ export function getDefaultMissionLimitations(typeInspection?: InspectionType): s
     : BASE_MISSION_LIMITATIONS
 }
 
-// ── Édition collectivité ────────────────────────────────────────────────────
+// ── Mission : exploitant, catégorie de vol, points de contrôle ───────────────
 
 /** Structures exploitantes UAS du territoire. */
 export const EXPLOITANT_LABELS: Record<Exploitant, string> = {
