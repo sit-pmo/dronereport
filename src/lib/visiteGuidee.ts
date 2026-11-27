@@ -264,7 +264,7 @@ export function etapeDeReprise(chemin: string, derniere = lireEtape()): number {
 }
 
 /** Convertit nos étapes en étapes driver.js. */
-function versDriver(parcours: Parcours): DriveStep[] {
+export function versDriver(parcours: Parcours): DriveStep[] {
   return ETAPES[parcours].map((e, i) => ({
     element: e.element,
     // « clic » : le clic sur le vrai bouton fait avancer ; « envoi » : la validation du formulaire
@@ -282,13 +282,18 @@ function versDriver(parcours: Parcours): DriveStep[] {
       // Pas de retour arrière : l'étape précédente est souvent sur un autre écran
       showButtons: e.action ? ['close'] : ['next', 'close'],
       // « Suivant » qui change d'écran : on ouvre l'écran (HashRouter), puis la
-      // visite attend que l'élément suivant s'affiche (waitForElement)
-      onNextClick: e.allerA
-        ? (_el, _step, o) => {
-          window.location.hash = `#${e.allerA}`
-          o.driver.moveNext()
+      // visite attend que l'élément suivant s'affiche (waitForElement).
+      // Clé posée seulement si besoin : driver.js recopie les options de la bulle
+      // par-dessus les siennes, et un « onNextClick: undefined » désactiverait
+      // le bouton « Suivant » de toutes les autres étapes.
+      ...(e.allerA
+        ? {
+          onNextClick: (_el, _step, o) => {
+            window.location.hash = `#${e.allerA}`
+            o.driver.moveNext()
+          },
         }
-        : undefined,
+        : {}),
     },
     onHighlighted: () => {
       derniereVue = i
