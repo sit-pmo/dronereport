@@ -43,5 +43,6 @@
     "vite": "^8.0.12",
     "vitest": "^4.1.7"
   },
-  "license": "AGPL-3.0-or-later"
+  "license": "AGPL-3.0-or-later",
+  "author": "PETR Marennes Oléron (auteur : Aurélien Chaumet, service SIT)"
 }

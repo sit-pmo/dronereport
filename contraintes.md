@@ -17,9 +17,9 @@
 
 ## À trancher
 
-- [ ] Titulaire des droits d'auteur à inscrire (en-tête de licence, README) : le code reprend
-  l'ancienne version SaaS (dépôt privé personnel) ; PETR/SyMONT, auteur, ou les deux ? À confirmer
-  avant d'ajouter une mention « Copyright ».
+- [x] Titulaire des droits d'auteur : PETR Marennes Oléron (code écrit par Aurélien Chaumet dans ses
+  fonctions au PETR). Mention dans le README et `package.json`. À passer au nom du SyMONT au 01/01/2027.
+- [ ] Accord écrit de la hiérarchie (DGS ou président) pour la publication sous AGPL.
 - [ ] Texte de `LICENSE` repris de la liste SPDX (gnu.org bloqué depuis la session) : contenu identique,
   paragraphes sur une ligne. Remplaçable par https://www.gnu.org/licenses/agpl-3.0.txt si on préfère.
 - [ ] Les notes du téléphone ne se rattachent qu'au parcours « sans ortho » (Photos terrain). Avec une ortho, pas de rattachement possible : voulu ou à ajouter ?

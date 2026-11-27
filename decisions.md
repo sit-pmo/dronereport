@@ -21,3 +21,4 @@
 2026-11-27 | Projet SaaS abandonné : ce dépôt devient LE projet DroneReport, toutes les mentions « édition collectivité » sont retirées de l'appli et des documents | Plus de version concurrente à distinguer
 2026-11-27 | Nom de la base IndexedDB `dronereport-collectivite` conservé ; marqueurs .json renommés en `dronereport/…` avec lecture des anciens | Renommer la base ferait disparaître les rapports et carnets déjà enregistrés ; les fichiers déjà exportés doivent rester importables
 2026-11-27 | DroneReport publié en logiciel libre sous AGPL-3.0-or-later plutôt que vendu | Copyleft fort, y compris en service en ligne : personne ne peut en refaire un produit fermé ; licence de la liste autorisée aux administrations (décret 2021-1559)
+2026-11-27 | Mention « © 2026 PETR Marennes Oléron, auteur Aurélien Chaumet » | Logiciel écrit par un agent dans ses fonctions : droits d'exploitation à l'employeur (CPI art. L113-9) ; l'auteur reste cité
