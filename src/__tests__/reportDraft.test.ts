@@ -6,6 +6,7 @@ import {
   updateDraftMission,
   updateDraftConclusion,
   updateDraftOrtho,
+  updateDraftPlanBatiment,
 } from '../lib/reportDraft'
 import type { MissionInfos, PhotoItem } from '../types'
 
@@ -85,5 +86,14 @@ describe('updateDraftOrtho', () => {
     const withOrtho = updateDraftOrtho(draft, { id: 'o1', status: 'done' })
     const cleared = updateDraftOrtho(withOrtho, null)
     expect(cleared.ortho).toBeNull()
+  })
+})
+
+// Position du bâtiment sur le plan de situation : gardée dans le brouillon
+describe('planBatiment', () => {
+  it('est enregistrée puis relue avec le brouillon', () => {
+    const d = updateDraftPlanBatiment(createPhotoDraft(), { lat: 45.9421, lon: -1.3059 })
+    saveDraft(d)
+    expect(loadDraft(d.sessionUuid)?.planBatiment).toEqual({ lat: 45.9421, lon: -1.3059 })
   })
 })

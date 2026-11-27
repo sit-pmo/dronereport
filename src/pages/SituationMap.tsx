@@ -8,7 +8,7 @@ import iconUrl from 'leaflet/dist/images/marker-icon.png'
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png'
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png'
 import { useDraft } from '../hooks/useDraft'
-import { saveDraft, loadDraft, updateDraftIgnPlan, updateDraftPhotos } from '../lib/reportDraft'
+import { saveDraft, loadDraft, updateDraftIgnPlan, updateDraftPhotos, updateDraftPlanBatiment } from '../lib/reportDraft'
 import { blobToDataUrl } from '../lib/imageUtils'
 import {
   photosDuPdf, reperesPhotos, dansEmprise, versPixel, versReperesPlan,
@@ -177,9 +177,13 @@ export default function SituationMap() {
   const navigate = useNavigate()
   const { draft, setDraft } = useDraft()
   const mapRef = useRef<LMap | null>(null)
-  const [center, setCenter] = useState<[number, number]>(DEFAULT_CENTER)
-  const [zoom, setZoom] = useState(DEFAULT_ZOOM)
-  const [markerPos, setMarkerPos] = useState<[number, number] | null>(null)
+  // Position du bâtiment déjà enregistrée (retour sur le plan) : on repart d'elle, pas de l'adresse
+  const batimentEnregistre: [number, number] | null = draft?.planBatiment
+    ? [draft.planBatiment.lat, draft.planBatiment.lon]
+    : null
+  const [center, setCenter] = useState<[number, number]>(batimentEnregistre ?? DEFAULT_CENTER)
+  const [zoom, setZoom] = useState(batimentEnregistre ? GEOCODE_ZOOM : DEFAULT_ZOOM)
+  const [markerPos, setMarkerPos] = useState<[number, number] | null>(batimentEnregistre)
   const [geocodeFailed, setGeocodeFailed] = useState(false)
   const [capturing, setCapturing] = useState(false)
   const [captureError, setCaptureError] = useState(false)
@@ -199,6 +203,8 @@ export default function SituationMap() {
     : 0
 
   useEffect(() => {
+    // Bâtiment déjà placé lors d'un passage précédent : ne pas le remplacer par l'adresse géocodée
+    if (draft?.planBatiment) return
     const adresse = draft?.mission?.adresse
     if (!adresse) {
       setGeocodeFailed(true)
@@ -244,13 +250,26 @@ export default function SituationMap() {
     setDraft(next)
   }
 
+  /**
+   * Déplace le marqueur du bâtiment et l'enregistre dans le brouillon (planBatiment),
+   * pour le retrouver au prochain passage sur le plan (ex. pour localiser les photos).
+   */
+  function majBatiment(pos: [number, number]) {
+    setMarkerPos(pos)
+    if (!draft) return
+    const d = loadDraft(draft.sessionUuid) ?? draft
+    const next = updateDraftPlanBatiment(d, { lat: pos[0], lon: pos[1] })
+    saveDraft(next)
+    setDraft(next)
+  }
+
   /** Clic sur la carte : place la photo en attente, sinon déplace le marqueur du bâtiment. */
   function surClicCarte(pos: [number, number]) {
     if (aPlacer) {
       majPosition(aPlacer, { lat: pos[0], lon: pos[1] })
       setAPlacer(null)
     } else {
-      setMarkerPos(pos)
+      majBatiment(pos)
     }
   }
 
@@ -281,7 +300,9 @@ export default function SituationMap() {
         : await blobToDataUrl(blob)
       // Relire le brouillon : les positions ont pu changer depuis le dernier rendu
       const d = loadDraft(draft.sessionUuid) ?? draft
-      const next = updateDraftIgnPlan(d, dataUrl, versReperesPlan(visibles), empriseCapturee)
+      // Le bâtiment est aussi enregistré à la capture (cas d'une position géocodée jamais déplacée)
+      const avecBatiment = markerPos ? updateDraftPlanBatiment(d, { lat: markerPos[0], lon: markerPos[1] }) : d
+      const next = updateDraftIgnPlan(avecBatiment, dataUrl, versReperesPlan(visibles), empriseCapturee)
       saveDraft(next)
       setDraft(next)
       navigate('/photos-terrain')
@@ -320,7 +341,7 @@ export default function SituationMap() {
                 eventHandlers={{
                   dragend: (e) => {
                     const { lat, lng } = e.target.getLatLng()
-                    setMarkerPos([lat, lng])
+                    majBatiment([lat, lng])
                   },
                 }}
               />

@@ -129,6 +129,11 @@ export function updateDraftIgnPlan(
   return { ...draft, ignPlanDataUrl, ignPlanReperes: reperes, ignPlanEmprise: emprise }
 }
 
+/** Enregistre la position du bâtiment placée sur le plan de situation. */
+export function updateDraftPlanBatiment(draft: ReportDraft, planBatiment: { lat: number; lon: number }): ReportDraft {
+  return { ...draft, planBatiment }
+}
+
 export function updateDraftPhotos(draft: ReportDraft, photos: PhotoItem[]): ReportDraft {
   return { ...draft, photos }
 }

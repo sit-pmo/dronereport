@@ -96,7 +96,7 @@ export default function Photos() {
 
   function resetIgnPlan() {
     if (!draft) return
-    const next = { ...draft, ignPlanDataUrl: undefined, ignPlanReperes: undefined, ignPlanEmprise: undefined, photos: undefined }
+    const next = { ...draft, ignPlanDataUrl: undefined, ignPlanReperes: undefined, ignPlanEmprise: undefined, planBatiment: undefined, photos: undefined }
     saveDraft(next as typeof draft)
     setDraft(next as typeof draft)
   }

@@ -102,6 +102,8 @@ export interface ReportDraft {
   // Servent au renvoi « repère N » du PDF et à détecter un plan qui n'est plus à jour.
   ignPlanReperes?: { id: string; numero: number; lat: number; lon: number }[]
   ignPlanEmprise?: { nord: number; sud: number; est: number; ouest: number }
+  // Position du bâtiment placée sur le plan de situation (marqueur rouge), reprise à chaque retour sur le plan
+  planBatiment?: { lat: number; lon: number }
   photos?: PhotoItem[]      // photos terrain individuelles avec annotations (flow sans ortho)
   carnetId?: string         // carnet de notes terrain rattaché à ce rapport
   exemple?: boolean         // rapport d'exemple (mode « Essayer avec un exemple »), données fictives
