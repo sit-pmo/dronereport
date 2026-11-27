@@ -23,4 +23,7 @@
 - [ ] Texte de `LICENSE` repris de la liste SPDX (gnu.org bloqué depuis la session) : contenu identique,
   paragraphes sur une ligne. Remplaçable par https://www.gnu.org/licenses/agpl-3.0.txt si on préfère.
 - [ ] Les notes du téléphone ne se rattachent qu'au parcours « sans ortho » (Photos terrain). Avec une ortho, pas de rattachement possible : voulu ou à ajouter ?
+- [ ] Emplacement des photos sur le plan de situation : absent (un seul repère, plan capturé avant les photos).
+  Vérifier si l'ancienne version SaaS (dépôt privé `aurelienchaumet/dronereport`) le faisait, puis décider
+  de l'ajouter (points numérotés dessinés à la génération du PDF ; position du drone, pas du défaut).
 - [ ] Numéro de version : `package.json` indique 0.1.0, le CHANGELOG et AGENTS.md parlent de 1.0.0.
