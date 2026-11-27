@@ -11,11 +11,14 @@ export function useExemple() {
   const navigate = useNavigate()
   const { draft, setDraft } = useDraft()
 
-  /** Crée un exemple neuf, ouvre le formulaire mission et lance la visite guidée. */
+  /**
+   * Crée un exemple neuf et lance la visite guidée depuis l'accueil
+   * (première étape : importer un carnet ou partir d'un rapport vierge).
+   */
   function demarrerExemple() {
     const d = creerExemple()
     setDraft(d)
-    navigate('/mission')
+    navigate('/app')
     void lancerVisite(0)
   }
 
