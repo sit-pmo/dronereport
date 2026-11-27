@@ -5,8 +5,14 @@
 ### Ajouté
 - Licence libre GNU AGPL v3.0 ou ultérieure (`LICENSE`) ; lien « code source » dans l'appli
   (menu de gauche, Notes terrain, Guide).
+- Plan de situation : repères numérotés des photos terrain (numéro = « Photo N » du PDF), à glisser sur
+  le point photographié, placement à la main des photos sans GPS, « Ajuster la vue », alerte si le plan
+  n'est plus à jour. Bouton « 📍 Localiser les photos sur le plan » dans Photos terrain. Dans le PDF,
+  « Repère N sur le plan de situation » sur chaque page photo. Position du bâtiment gardée dans le rapport.
 
 ### Changé
+- Visite guidée de l'exemple : démarre sur l'accueil (importer un carnet ou « + Nouveau rapport »),
+  23 étapes. Corrigé : « Suivant » bloqué à partir de l'étape 2.
 - Fin de « l'édition collectivité » : l'application s'appelle simplement DroneReport (menu, accueil,
   titre, appli installée, pied de page du PDF, paquet npm). Le projet SaaS est abandonné.
 - Fichiers .json exportés avec le marqueur `dronereport/rapport` et `dronereport/carnet` ; les fichiers

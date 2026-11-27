@@ -48,12 +48,17 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 - « 🧪 Essayer avec un exemple » (accueil, guide) : rapport + carnet fictifs (`src/lib/exemple.ts`,
   photos dans `public/exemple/`) et visite guidée en 23 étapes de l'accueil jusqu'au PDF (`src/lib/visiteGuidee.ts`,
   driver.js 1.11.0). Les étapes visent des attributs `data-tour` : ne pas les retirer d'une page
-  (un test vérifie qu'ils existent).
+  (un test vérifie qu'ils existent). La 1re étape est sur l'accueil (importer un carnet ou « + Nouveau
+  rapport ») ; son « Suivant » ouvre /mission (champ `allerA`).
+  Piège driver.js : les options de la bulle écrasent celles de driver.js, même à `undefined`.
+  Ne jamais poser `onNextClick: undefined` (le bouton « Suivant » ne fait plus rien) : un test le vérifie.
 - Visite guidée téléphone (mode terrain) : « 🧪 Découvrir en 1 minute » dans Notes terrain et dans le
   Guide sur mobile, 8 étapes sur un carnet d'essai (`ETAPES_VISITE_TERRAIN`). Une étape « clic » peut
   surligner une zone entière et n'avancer qu'au clic sur un bouton (`clicSur`) : sinon le voile
-  empêche d'utiliser les champs voisins. 55 tests unitaires.
-- Plan de situation (sans ortho) : repères numérotés des photos terrain (numéro = « Photo N » du PDF),
-  déplaçables, position corrigée dans `PhotoItem.position` (`meta.gps` intact). Logique pure dans
-  `src/lib/reperesPhotos.ts` ; le PDF renvoie au repère tant que le plan est à jour (`ignPlanReperes`).
+  empêche d'utiliser les champs voisins. 68 tests unitaires.
+- Plan de situation (sans ortho) : repère du bâtiment (gardé dans `draft.planBatiment`) et repères
+  numérotés des photos terrain (numéro = « Photo N » du PDF), déplaçables, position corrigée dans
+  `PhotoItem.position` (`meta.gps` intact). Retour au plan depuis Photos terrain (« 📍 Localiser les
+  photos sur le plan »). Logique pure dans `src/lib/reperesPhotos.ts` ; le PDF renvoie au repère tant
+  que le plan est à jour (`ignPlanReperes`).
 - Points ouverts : voir `contraintes.md` (« À vérifier » sur matériel réel, « À trancher »).
