@@ -7,6 +7,8 @@
   (menu de gauche, Notes terrain, Guide).
 
 ### Changé
+- Visite guidée de l'exemple : démarre sur l'accueil (importer un carnet ou « + Nouveau rapport »),
+  23 étapes. Corrigé : « Suivant » bloqué à partir de l'étape 2.
 - Fin de « l'édition collectivité » : l'application s'appelle simplement DroneReport (menu, accueil,
   titre, appli installée, pied de page du PDF, paquet npm). Le projet SaaS est abandonné.
 - Fichiers .json exportés avec le marqueur `dronereport/rapport` et `dronereport/carnet` ; les fichiers
