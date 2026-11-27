@@ -7,7 +7,7 @@ import { join } from 'node:path'
 import { creerExemple, supprimerExemple, carnetExemple, ID_CARNET_EXEMPLE, PHOTOS_EXEMPLE } from '../lib/exemple'
 import { findExistingDrafts } from '../lib/reportDraft'
 import { getCarnet } from '../lib/notesTerrain'
-import { ETAPES_VISITE, ETAPES_VISITE_TERRAIN, etapeDeReprise } from '../lib/visiteGuidee'
+import { ETAPES_VISITE, ETAPES_VISITE_TERRAIN, etapeDeReprise, versDriver } from '../lib/visiteGuidee'
 
 beforeEach(() => {
   localStorage.clear()
@@ -80,6 +80,17 @@ describe('visite guidée', () => {
     for (const etapes of [ETAPES_VISITE, ETAPES_VISITE_TERRAIN]) {
       expect(etapes.at(-1)?.element).toBeUndefined()
       for (const e of etapes) if (e.action) expect(e.element).toBeTruthy()
+    }
+  })
+
+  it('« Suivant » garde son action par défaut sauf sur les étapes qui changent d\'écran', () => {
+    // driver.js recopie les options de la bulle par-dessus les siennes :
+    // une clé onNextClick vide bloquerait le bouton « Suivant »
+    for (const parcours of ['bureau', 'terrain'] as const) {
+      const etapes = parcours === 'bureau' ? ETAPES_VISITE : ETAPES_VISITE_TERRAIN
+      versDriver(parcours).forEach((d, i) => {
+        expect('onNextClick' in (d.popover ?? {}), `${parcours} étape ${i + 1}`).toBe(!!etapes[i].allerA)
+      })
     }
   })
 
