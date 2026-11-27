@@ -46,7 +46,7 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
   avec des données fictives ; repères et légendes dans `src/lib/guideCaptures.json`.
   Si un écran ou un libellé change, relancer `npm run captures`.
 - « 🧪 Essayer avec un exemple » (accueil, guide) : rapport + carnet fictifs (`src/lib/exemple.ts`,
-  photos dans `public/exemple/`) et visite guidée en 22 étapes jusqu'au PDF (`src/lib/visiteGuidee.ts`,
+  photos dans `public/exemple/`) et visite guidée en 23 étapes de l'accueil jusqu'au PDF (`src/lib/visiteGuidee.ts`,
   driver.js 1.11.0). Les étapes visent des attributs `data-tour` : ne pas les retirer d'une page
   (un test vérifie qu'ils existent).
 - Visite guidée téléphone (mode terrain) : « 🧪 Découvrir en 1 minute » dans Notes terrain et dans le

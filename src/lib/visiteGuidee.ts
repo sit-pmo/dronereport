@@ -34,6 +34,8 @@ export interface EtapeVisite {
   cote?: 'top' | 'right' | 'bottom' | 'left'
   /** Étape « clic » : n'avancer qu'au clic sur ce sous-élément de la zone surlignée. */
   clicSur?: string
+  /** Étape « suivant » : écran à ouvrir au clic sur « Suivant » (l'étape suivante est sur cet écran). */
+  allerA?: string
 }
 
 /** Sélecteur d'un attribut data-tour. */
@@ -41,9 +43,14 @@ const t = (nom: string) => `[data-tour="${nom}"]`
 
 export const ETAPES_VISITE: EtapeVisite[] = [
   {
+    route: '/app', element: t('accueil-demarrer'), cote: 'bottom', allerA: '/mission',
+    titre: 'Deux façons de commencer',
+    texte: "Sur le terrain, prenez vos notes sur le téléphone (« Notes terrain »), puis importez-les ici avec « Importer un rapport ou un carnet » : le rapport démarre pré-rempli. Pour commencer directement sur l'ordinateur : « + Nouveau rapport ». Pour l'exemple, un carnet est déjà importé : cliquez sur « Suivant ».",
+  },
+  {
     route: '/mission', element: '#batiment', cote: 'bottom',
     titre: 'Un rapport déjà pré-rempli',
-    texte: "Sur le terrain, le télépilote a noté 3 défauts sur son téléphone, puis a envoyé le carnet vers l'ordinateur. En important ce carnet, le bâtiment et la date se remplissent seuls.",
+    texte: "Le carnet de l'exemple contient 3 défauts notés au téléphone pendant le vol. En l'important, le bâtiment et la date se sont remplis seuls.",
   },
   {
     route: '/mission', element: '#adresse', cote: 'bottom',
@@ -63,7 +70,7 @@ export const ETAPES_VISITE: EtapeVisite[] = [
   {
     route: '/photos', element: t('choix-ortho'), cote: 'right',
     titre: 'Avec une ortho (recommandé)',
-    texte: "Si vous avez une orthophoto du toit (Pix4D, WebODM…), on annote directement dessus. Pour l'exemple, on n'en a pas.",
+    texte: "Si vous avez une orthophoto du toit (Pix4D, WebODM…), on annote directement dessus.",
   },
   {
     route: '/photos', element: t('sans-ortho'), cote: 'top', action: 'clic',
@@ -274,6 +281,14 @@ function versDriver(parcours: Parcours): DriveStep[] {
       side: e.cote,
       // Pas de retour arrière : l'étape précédente est souvent sur un autre écran
       showButtons: e.action ? ['close'] : ['next', 'close'],
+      // « Suivant » qui change d'écran : on ouvre l'écran (HashRouter), puis la
+      // visite attend que l'élément suivant s'affiche (waitForElement)
+      onNextClick: e.allerA
+        ? (_el, _step, o) => {
+          window.location.hash = `#${e.allerA}`
+          o.driver.moveNext()
+        }
+        : undefined,
     },
     onHighlighted: () => {
       derniereVue = i

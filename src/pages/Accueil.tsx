@@ -149,7 +149,8 @@ export default function Accueil() {
         </section>
       )}
 
-      <div style={s.actions}>
+      {/* data-tour : première étape de la visite guidée (lib/visiteGuidee) */}
+      <div style={s.actions} data-tour="accueil-demarrer">
         <button onClick={handleNew} style={s.ctaPrimary}>+ Nouveau rapport</button>
         <button onClick={demarrerExemple} style={s.ctaSecondary} title="Rapport fictif et visite guidée, sans drone">🧪 Essayer avec un exemple</button>
         <button onClick={() => importRef.current?.click()} style={s.ctaSecondary}>Importer un rapport ou un carnet (.json)</button>
