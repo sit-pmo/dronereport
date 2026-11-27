@@ -8,6 +8,7 @@ import { readPhotoMeta } from '../lib/photoMeta'
 import { downscaleImage } from '../lib/imageUtils'
 import AideEcran from '../components/AideEcran'
 import { chargerPhotosExemple } from '../lib/exemple'
+import { planPerime } from '../lib/reperesPhotos'
 
 const MAX_FILE_SIZE_MB = 30
 const TERRAIN_MAX_WIDTH = 1200
@@ -198,6 +199,20 @@ export default function PhotosTerrain() {
         </button>
       )}
 
+      {/* Plan capturé qui ne montre plus les bons repères (déplacés, renumérotés, nouveaux) */}
+      {hasDone && draft && planPerime(draft) && (
+        <p style={s.alerte}>
+          Le plan de situation n'est plus à jour : des repères photos ont changé. Recapturez-le avec « Localiser les photos sur le plan ».
+        </p>
+      )}
+
+      {/* Retour au plan de situation pour placer les repères numérotés des photos */}
+      {hasDone && (
+        <button onClick={() => navigate('/situation')} style={{ ...s.addBtn, background: '#fff', color: '#1a2e44', border: '1.5px solid #c9d3dc', marginTop: 24, marginLeft: 12 }}>
+          📍 Localiser les photos sur le plan
+        </button>
+      )}
+
       <button
         onClick={() => navigate('/preview')}
         data-tour="generer-apercu"
@@ -228,6 +243,7 @@ const s: Record<string, React.CSSProperties> = {
   name: { fontSize: 14, fontWeight: 600, color: '#0f1a25', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
   annCount: { fontSize: 12, color: '#5a7083' },
   errorText: { fontSize: 12, color: '#b91c1c' },
+  alerte: { background: '#fef3e2', border: '1px solid #e5b87a', borderRadius: 8, padding: '10px 14px', color: '#92570a', fontSize: 14, margin: '24px 0 0' },
   actions: { display: 'flex', gap: 6, flexShrink: 0 },
   annotateBtn: { background: '#1a2e44', color: '#fff', border: 'none', borderRadius: 7, padding: '6px 14px', cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', minHeight: 32 },
   retryBtn: { background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 7, color: '#b91c1c', padding: '6px 12px', cursor: 'pointer', fontSize: 12, fontFamily: 'inherit', minHeight: 32 },

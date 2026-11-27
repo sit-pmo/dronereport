@@ -49,6 +49,9 @@ export interface PhotoItem {
   groundResolution?: { x: number; y: number }
   measurements?: Measure[]
   meta?: PhotoMeta                   // heure + GPS lus dans la photo (rattachement des notes)
+  // Position corrigée par l'utilisateur sur le plan de situation (point photographié).
+  // Distincte de meta.gps, qui reste intact : c'est la position du drone à la prise de vue.
+  position?: { lat: number; lon: number }
   // Client-only — not serialized to localStorage
   _file?: File
 }
@@ -95,6 +98,12 @@ export interface ReportDraft {
   // remplacer reviendrait à régénérer un rapport différent sans recompter de quota.
   orthoLocked?: boolean
   ignPlanDataUrl?: string   // base64 PNG capture carte IGN (flow sans ortho)
+  // Repères photos dessinés sur ignPlanDataUrl à la capture (numéro + position), et emprise capturée.
+  // Servent au renvoi « repère N » du PDF et à détecter un plan qui n'est plus à jour.
+  ignPlanReperes?: { id: string; numero: number; lat: number; lon: number }[]
+  ignPlanEmprise?: { nord: number; sud: number; est: number; ouest: number }
+  // Position du bâtiment placée sur le plan de situation (marqueur rouge), reprise à chaque retour sur le plan
+  planBatiment?: { lat: number; lon: number }
   photos?: PhotoItem[]      // photos terrain individuelles avec annotations (flow sans ortho)
   carnetId?: string         // carnet de notes terrain rattaché à ce rapport
   exemple?: boolean         // rapport d'exemple (mode « Essayer avec un exemple »), données fictives

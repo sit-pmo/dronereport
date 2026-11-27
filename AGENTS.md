@@ -55,7 +55,10 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
 - Visite guidée téléphone (mode terrain) : « 🧪 Découvrir en 1 minute » dans Notes terrain et dans le
   Guide sur mobile, 8 étapes sur un carnet d'essai (`ETAPES_VISITE_TERRAIN`). Une étape « clic » peut
   surligner une zone entière et n'avancer qu'au clic sur un bouton (`clicSur`) : sinon le voile
-  empêche d'utiliser les champs voisins. 56 tests unitaires.
-- Plan de situation : un seul repère (le bâtiment), capturé avant l'import des photos. Les photos n'y
-  figurent pas, même si leur GPS est lu (`photoMeta.ts`). Comparaison avec l'ancien dépôt SaaS à faire.
+  empêche d'utiliser les champs voisins. 68 tests unitaires.
+- Plan de situation (sans ortho) : repère du bâtiment (gardé dans `draft.planBatiment`) et repères
+  numérotés des photos terrain (numéro = « Photo N » du PDF), déplaçables, position corrigée dans
+  `PhotoItem.position` (`meta.gps` intact). Retour au plan depuis Photos terrain (« 📍 Localiser les
+  photos sur le plan »). Logique pure dans `src/lib/reperesPhotos.ts` ; le PDF renvoie au repère tant
+  que le plan est à jour (`ignPlanReperes`).
 - Points ouverts : voir `contraintes.md` (« À vérifier » sur matériel réel, « À trancher »).

@@ -116,8 +116,22 @@ export function updateDraftMissionLimitations(draft: ReportDraft, missionLimitat
   return { ...draft, missionLimitations }
 }
 
-export function updateDraftIgnPlan(draft: ReportDraft, ignPlanDataUrl: string): ReportDraft {
-  return { ...draft, ignPlanDataUrl }
+/**
+ * Enregistre le plan de situation capturé.
+ * `reperes` : repères photos dessinés sur l'image ; `emprise` : zone capturée.
+ */
+export function updateDraftIgnPlan(
+  draft: ReportDraft,
+  ignPlanDataUrl: string,
+  reperes: ReportDraft['ignPlanReperes'] = [],
+  emprise?: ReportDraft['ignPlanEmprise'],
+): ReportDraft {
+  return { ...draft, ignPlanDataUrl, ignPlanReperes: reperes, ignPlanEmprise: emprise }
+}
+
+/** Enregistre la position du bâtiment placée sur le plan de situation. */
+export function updateDraftPlanBatiment(draft: ReportDraft, planBatiment: { lat: number; lon: number }): ReportDraft {
+  return { ...draft, planBatiment }
 }
 
 export function updateDraftPhotos(draft: ReportDraft, photos: PhotoItem[]): ReportDraft {

@@ -23,7 +23,8 @@
 - [ ] Texte de `LICENSE` repris de la liste SPDX (gnu.org bloqué depuis la session) : contenu identique,
   paragraphes sur une ligne. Remplaçable par https://www.gnu.org/licenses/agpl-3.0.txt si on préfère.
 - [ ] Les notes du téléphone ne se rattachent qu'au parcours « sans ortho » (Photos terrain). Avec une ortho, pas de rattachement possible : voulu ou à ajouter ?
-- [ ] Emplacement des photos sur le plan de situation : absent (un seul repère, plan capturé avant les photos).
-  Vérifier si l'ancienne version SaaS (dépôt privé `aurelienchaumet/dronereport`) le faisait, puis décider
-  de l'ajouter (points numérotés dessinés à la génération du PDF ; position du drone, pas du défaut).
+- [x] Emplacement des photos sur le plan de situation : ajouté (repères numérotés, déplaçables, dessinés
+  à la capture du plan ; le GPS du drone sert de position de départ). Comparaison avec l'ancien dépôt SaaS non faite.
+- [ ] Ordre des photos : la liste « Photos terrain » est triée par heure, le PDF (et donc les numéros de
+  repère) suit l'ordre d'import. Trier aussi le PDF par heure ?
 - [ ] Numéro de version : `package.json` indique 0.1.0, le CHANGELOG et AGENTS.md parlent de 1.0.0.
