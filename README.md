@@ -6,6 +6,11 @@ rapport PDF au bureau. Sans paiement, sans compte et sans serveur.
 
 En ligne : https://sit-pmo.github.io/dronereport/
 
+Logiciel libre sous licence **GNU AGPL v3.0 ou ultérieure** (fichier `LICENSE`).
+Vous pouvez l'utiliser, le modifier et le redistribuer ; toute version modifiée,
+y compris mise en ligne comme service, doit être publiée sous la même licence,
+avec son code source.
+
 ## Principe : les données restent sur le poste
 
 - Rapports, photos et notes sont stockés dans le navigateur (IndexedDB).

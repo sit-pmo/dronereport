@@ -1,6 +1,7 @@
 # DroneReport
 
-Outil interne du SIT (PETR Marennes Oléron / SyMONT) : notes terrain sur téléphone et rapports PDF d'inspection de toiture par drone. Dépôt public : aucun secret, aucune donnée.
+Logiciel libre (AGPL-3.0-or-later, fichier `LICENSE`) porté par le SIT (PETR Marennes Oléron / SyMONT) : notes terrain sur téléphone et rapports PDF d'inspection de toiture par drone. Dépôt public : aucun secret, aucune donnée.
+L'appli affiche un lien vers le code source (menu de gauche, Notes terrain, Guide) : le garder, l'AGPL le demande pour une appli en ligne.
 
 ## Design
 

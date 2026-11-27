@@ -102,6 +102,8 @@ function ListeCarnets({ carnets, onOpen, onCreate, onDelete, onBureau, onGuide }
 
       <button onClick={onBureau} style={{ ...s.link, marginTop: 32 }}>Aller aux rapports (ordinateur) →</button>
       <button onClick={onGuide} style={{ ...s.link, display: 'block' }}>Comment ça marche ? (guide)</button>
+      {/* Logiciel libre AGPL-3.0 : lien vers le code source (article 13 de la licence) */}
+      <a href="https://github.com/sit-pmo/dronereport" target="_blank" rel="noreferrer" style={s.source}>Logiciel libre (AGPL-3.0) · code source</a>
     </main>
   )
 }
@@ -239,6 +241,7 @@ const s: Record<string, React.CSSProperties> = {
   actionRow: { display: 'flex', gap: 8, marginBottom: 20 },
   btnPrimary: { background: '#0f1a25', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 16px', fontSize: 16, fontWeight: 600, minHeight: 52, cursor: 'pointer', fontFamily: 'inherit' },
   btnSecondary: { background: '#fff', color: '#0f1a25', border: '1.5px solid #c9d3dc', borderRadius: 8, padding: '10px 14px', fontSize: 15, fontWeight: 600, minHeight: 48, cursor: 'pointer', fontFamily: 'inherit' },
+  source: { display: 'block', marginTop: 24, fontSize: 13, color: '#8a9eb0' },
   visiteBtn: {
     display: 'block', width: '100%', margin: '0 0 16px', padding: '12px 14px', borderRadius: 10,
     background: '#fef3e2', border: '1.5px solid #f3d9b1', color: '#1a2e44', fontSize: 15, fontWeight: 600,

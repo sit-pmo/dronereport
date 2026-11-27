@@ -79,6 +79,10 @@ export default function AppLayout({ children }: { children: ReactNode }) {
 
         <div style={sb.footerNote}>
           Données stockées dans ce navigateur uniquement.
+          {/* Logiciel libre AGPL-3.0 : lien vers le code source (article 13 de la licence) */}
+          <a href="https://github.com/sit-pmo/dronereport" target="_blank" rel="noreferrer" style={sb.sourceLink}>
+            Logiciel libre (AGPL-3.0) · code source
+          </a>
         </div>
       </aside>
 
@@ -88,6 +92,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
 }
 
 const sb: Record<string, React.CSSProperties> = {
+  sourceLink: { display: 'block', marginTop: 6, color: 'rgba(255,255,255,0.55)', textDecoration: 'underline' },
   guideLink: {
     margin: '0 10px 8px', padding: '9px 10px', borderRadius: 8, border: '1px solid rgba(255,255,255,0.12)',
     background: 'transparent', color: 'rgba(255,255,255,0.75)', fontSize: 13.5, textAlign: 'left',

@@ -2,6 +2,10 @@
 
 ## [Non publié]
 
+### Ajouté
+- Licence libre GNU AGPL v3.0 ou ultérieure (`LICENSE`) ; lien « code source » dans l'appli
+  (menu de gauche, Notes terrain, Guide).
+
 ### Changé
 - Fin de « l'édition collectivité » : l'application s'appelle simplement DroneReport (menu, accueil,
   titre, appli installée, pied de page du PDF, paquet npm). Le projet SaaS est abandonné.

@@ -17,5 +17,10 @@
 
 ## À trancher
 
+- [ ] Titulaire des droits d'auteur à inscrire (en-tête de licence, README) : le code reprend
+  l'ancienne version SaaS (dépôt privé personnel) ; PETR/SyMONT, auteur, ou les deux ? À confirmer
+  avant d'ajouter une mention « Copyright ».
+- [ ] Texte de `LICENSE` repris de la liste SPDX (gnu.org bloqué depuis la session) : contenu identique,
+  paragraphes sur une ligne. Remplaçable par https://www.gnu.org/licenses/agpl-3.0.txt si on préfère.
 - [ ] Les notes du téléphone ne se rattachent qu'au parcours « sans ortho » (Photos terrain). Avec une ortho, pas de rattachement possible : voulu ou à ajouter ?
 - [ ] Numéro de version : `package.json` indique 0.1.0, le CHANGELOG et AGENTS.md parlent de 1.0.0.

@@ -98,6 +98,11 @@ export default function Guide() {
           {aidesReaffichees ? 'Aides réaffichées ✓' : 'Réafficher les aides'}
         </button>
       </p>
+      {/* Logiciel libre AGPL-3.0 : lien vers le code source (article 13 de la licence) */}
+      <p style={s.foot}>
+        DroneReport est un logiciel libre, sous licence AGPL-3.0 :{' '}
+        <a href="https://github.com/sit-pmo/dronereport" target="_blank" rel="noreferrer" style={{ color: '#c07828' }}>code source</a>.
+      </p>
     </main>
   )
 }
