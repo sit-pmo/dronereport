@@ -121,8 +121,7 @@ export default function PhotosTerrain() {
       <h1 style={s.title}>Photos terrain</h1>
       <p style={s.sub}>Importez les photos du drone (fichiers d'origine, pour garder l'heure et le GPS). Vous pourrez annoter les anomalies sur chacune et y rattacher vos notes terrain.</p>
       <AideEcran id="photos-terrain">
-        Importez les photos copiées depuis la carte SD du drone, pas celles reçues par messagerie.
-        Ensuite, « Rattacher les notes terrain » place vos notes du téléphone sur les bonnes photos.
+        « Rattacher les notes terrain » place vos notes du téléphone sur les bonnes photos.
       </AideEcran>
 
       <button onClick={() => fileInputRef.current?.click()} style={s.addBtn}>
