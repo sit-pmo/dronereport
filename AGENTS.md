@@ -61,4 +61,9 @@ Publication : push sur `main` → GitHub Actions → https://sit-pmo.github.io/d
   `PhotoItem.position` (`meta.gps` intact). Retour au plan depuis Photos terrain (« 📍 Localiser les
   photos sur le plan »). Logique pure dans `src/lib/reperesPhotos.ts` ; le PDF renvoie au repère tant
   que le plan est à jour (`ignPlanReperes`).
+  Piège react-leaflet : `useMapEvents` avec des handlers recréés à chaque rendu rate le `moveend` d'un
+  `setView` déclenché dans le même rendu (React retire puis remet l'écouteur). Poser l'écouteur dans
+  un `useEffect` lié à la carte seule (voir `SuiviEmprise` dans `SituationMap.tsx`).
+- Pas de preview par PR : le site ne se publie que depuis `main`. Tester en local (`npm run dev`)
+  avant de fusionner ; une fusion = une mise en ligne.
 - Points ouverts : voir `contraintes.md` (« À vérifier » sur matériel réel, « À trancher »).

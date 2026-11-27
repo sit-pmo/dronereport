@@ -13,6 +13,8 @@
 - [ ] Rapport créé depuis un carnet : adresse BAN trouvée en ligne et pertinente (GPS téléphone souvent à ~100 m)
 - [ ] Visite guidée de l'exemple sur un vrai poste Windows (Chrome / Edge), avec plan IGN réel
 - [ ] Visite guidée terrain sur un vrai téléphone (Android et iOS) : clavier ouvert, bulle lisible
+- [ ] Repères photos sur le plan IGN réel (testés seulement avec tuiles simulées) : GPS d'une vraie photo DJI,
+  lisibilité des numéros quand les repères se chevauchent
 - [ ] Exemple sur un poste hors fuseau de Paris : notes décalées de l'heure (attendu, réglable par le décalage)
 
 ## À trancher
